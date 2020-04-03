@@ -33,33 +33,32 @@ frames = (int)(len(data)/(3*COLS*ROWS));
 print(len(data))
 print(frames)
 GAMMA = 2
+animation = []
 for frame in range(0,frames):
 	print("{0}/{1}".format(frame,frames))
-	animation.append([]);
 	pixels[(int)(num_pixels*frame/frames)]=(64,0,0);
 	pixels.show();
 	for y in range(0,ROWS):
-		animation[frame].append([])
 		for x in range(0,COLS):
-			index = 3*(x+y*COLS)+frame*(COLS*ROWS*3)
-			#print("{0},{1} ({3}) {2}".format(x,y,index,frame))
-			animation[frame][y].append((
+			if((y%2)==1):
+				index = 3*((COLS-1-x)+y*COLS)+frame*(COLS*ROWS*3)
+			else:
+				index = 3*(x+y*COLS)+frame*(COLS*ROWS*3)
+			animation.append((
 				int(math.pow(int(data[index+0])/255.0,GAMMA)*255),
 				int(math.pow(int(data[index+1])/255.0,GAMMA)*255),
 				int(math.pow(int(data[index+2])/255.0,GAMMA)*255)
 			))
-		if((y%2)==1):
-			animation[frame][y].reverse()
 f.close()
 #print(animation)
 frame=0;
-while(True):
-	for i in range(0,num_pixels):
-		x = i%COLS;
-		y = math.floor(i/COLS)
-		pixels[i]=animation[frame][y][x]
-	pixels.show();
+while(1):
 	#print(frame)
+	ot = time.perf_counter()
+	for i in range(frame*(COLS*ROWS),frame*COLS*ROWS+num_pixels):
+		pixels[i-frame*(COLS*ROWS)]=animation[i]
+	pixels.show();
 	frame=(frame+1)%frames
-	#time.sleep(0.02)
+	#print(time.perf_counter()-ot)
+	time.sleep(max(0,0.03-(time.perf_counter()-ot)))
 

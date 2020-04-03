@@ -5,7 +5,7 @@ import time
 import math
 pixel_pin = board.D18
 COLS = 31
-ROWS = 4
+ROWS = 11
 num_pixels = COLS*ROWS
 
 ORDER = neopixel.GRB
