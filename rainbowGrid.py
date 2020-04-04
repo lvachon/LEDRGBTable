@@ -5,7 +5,7 @@ import time
 import math
 pixel_pin = board.D18
 COLS = 31
-ROWS = 11
+ROWS = 15
 num_pixels = COLS*ROWS
 
 ORDER = neopixel.GRB
@@ -51,8 +51,32 @@ def circle(cx,cy,r,color):
 		i = xy2i(x,y)
 		pixels[i]=color
 
-def fillRainbowCircles(cx,cy,startHue,hueStep):
+def rect(x,y,w,h,color):
+	for a in range(max(0,y),min(ROWS,y+h)):
+		if(x>=0 and x<COLS):
+			i = xy2i(x,a)
+			pixels[i]=color
+		if(x+w>=0 and x+w<COLS):
+			i = xy2i(x+w,a)
+			pixels[i]=color
+	for a in range(max(0,x),min(COLS,x+w)):
+		if(y>=0 and y<ROWS):
+			i = xy2i(a,y)
+			pixels[i]=color
+		if(y+h>=0 and y+h<ROWS):
+			i = xy2i(a,y+h)
+			pixels[i]=color
+	if(x+w>=0 and x+w<COLS and y+h>=0 and y+h<ROWS):
+		pixels[xy2i(x+w,y+h)]=color
+
+def fillRainbowSquares(cx,cy,startHue,hueStep):
 	for r in range(1,max(COLS,ROWS)):
+		hue = (startHue+hueStep*r) % 255
+		color = hue2rgb(hue)
+		rect(cx-r,cy-r,r*2,r*2,color)
+
+def fillRainbowCircles(cx,cy,startHue,hueStep):
+	for r in range(0,max(COLS,ROWS)):
 		hue = (startHue + hueStep*r) % 255
 		color = hue2rgb(hue)
 		circle(cx,cy,r,color)
@@ -62,8 +86,23 @@ CY=math.floor(ROWS/2);
 VX=1;
 VY=1;
 while True:
-	HUE=HUE+16
-	fillRainbowCircles(CX,CY,HUE,8);
+	HUE=HUE+1
+	fillRainbowSquares(CX,CY,HUE,8);
+	CX=CX+VX
+	CY=CY+VY
+	if CX<0:
+		CX=0
+		VX=1
+	if CX>=COLS:
+		CX=COLS-1
+		VX=-1
+	if CY<0:
+		CY=0
+		VY=1
+	if CY>=ROWS:
+		CY=ROWS-1
+		VY=-1
+	
 	pixels.show();
 #	time.sleep(0.001);
 

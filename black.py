@@ -5,7 +5,7 @@ import neopixel
 #import math
 pixel_pin = board.D18
 COLS = 31
-ROWS = 11
+ROWS = 15
 num_pixels = COLS*ROWS
 
 ORDER = neopixel.GRB

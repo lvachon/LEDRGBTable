@@ -7,7 +7,7 @@ import sys
 
 pixel_pin = board.D18
 COLS = 31
-ROWS = 11
+ROWS = 15
 num_pixels = COLS*ROWS
 
 ORDER = neopixel.GRB
@@ -41,9 +41,9 @@ for frame in range(0,frames):
 	for y in range(0,ROWS):
 		for x in range(0,COLS):
 			if((y%2)==1):
-				index = 3*((COLS-1-x)+y*COLS)+frame*(COLS*ROWS*3)
+				index = 3*((COLS-1-x)+y*COLS)+frame*(num_pixels*3)
 			else:
-				index = 3*(x+y*COLS)+frame*(COLS*ROWS*3)
+				index = 3*(x+y*COLS)+frame*(num_pixels*3)
 			animation.append((
 				int(math.pow(int(data[index+0])/255.0,GAMMA)*255),
 				int(math.pow(int(data[index+1])/255.0,GAMMA)*255),
@@ -52,11 +52,12 @@ for frame in range(0,frames):
 f.close()
 #print(animation)
 frame=0;
+
 while(1):
 	#print(frame)
 	ot = time.perf_counter()
-	for i in range(frame*(COLS*ROWS),frame*COLS*ROWS+num_pixels):
-		pixels[i-frame*(COLS*ROWS)]=animation[i]
+	for i in range(frame*num_pixels,frame*num_pixels+num_pixels):
+		pixels[i-frame*num_pixels]=animation[i]
 	pixels.show();
 	frame=(frame+1)%frames
 	#print(time.perf_counter()-ot)
