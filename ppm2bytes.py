@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
-import board
-import neopixel_write
-import digitalio
-import time
-import math
-import sys
 
-pin = digitalio.DigitalInOut(board.D18)
-pin.direction = digitalio.Direction.OUTPUT
+import sys
+import math
+
 
 COLS = 31
 ROWS = 15
