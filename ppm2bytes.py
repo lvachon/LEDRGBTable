@@ -27,7 +27,7 @@ for frame in range(0,frames):
 
 	for y in range(0,ROWS):
 		for x in range(0,COLS):
-			if((y%2)==1):
+			if((y%2)==0):
 				px=COLS-1-x
 			else:
 				px=x
