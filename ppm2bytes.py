@@ -16,7 +16,7 @@ dimensions = f.readline().split()
 maxval = f.readline()
 data = f.read()
 data = data.split()
-frames = (int)(len(data)/(3*COLS*ROWS));
+frames = (int)(len(data)/(num_pixels*3));
 print(len(data))
 print(frames)
 GAMMA = 2
@@ -28,9 +28,10 @@ for frame in range(0,frames):
 	for y in range(0,ROWS):
 		for x in range(0,COLS):
 			if((y%2)==1):
-				index = 3*((COLS-1-x)+y*COLS)+frame*(num_pixels*3)
+				px=COLS-1-x
 			else:
-				index = 3*(x+y*COLS)+frame*(num_pixels*3)
+				px=x
+			index = 3*(px+y*COLS)+frame*(num_pixels*3)
 			animation[cnt]=int(math.pow(int(data[index+1])/255.0,GAMMA)*255)  #G
 			animation[cnt+1]=int(math.pow(int(data[index+0])/255.0,GAMMA)*255)#R
 			animation[cnt+2]=int(math.pow(int(data[index+2])/255.0,GAMMA)*255)#B
