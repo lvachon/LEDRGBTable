@@ -10,7 +10,7 @@ pin = digitalio.DigitalInOut(board.D18)
 pin.direction = digitalio.Direction.OUTPUT
 
 COLS = 31
-ROWS = 15
+ROWS = 16
 num_pixels = COLS*ROWS
 #GRB ORDER
 

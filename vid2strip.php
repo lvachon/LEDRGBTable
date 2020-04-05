@@ -1,7 +1,7 @@
 <?php
 $fname = $argv[1];
 $COLS = 31;
-$ROWS = 15;
+$ROWS = 16;
 //convert to frames
 exec("ffmpeg -i {$fname} -vf scale={$COLS}:{$ROWS} -q:v 1 temp%5d.png");
 //Assemble frames

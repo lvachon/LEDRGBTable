@@ -5,7 +5,7 @@ import math
 
 
 COLS = 31
-ROWS = 15
+ROWS = 16
 num_pixels = COLS*ROWS
 #GRB ORDER
 
