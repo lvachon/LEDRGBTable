@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import board
 import neopixel
 import time
@@ -7,7 +7,7 @@ import sys
 
 pixel_pin = board.D18
 COLS = 31
-ROWS = 11
+ROWS = 15
 num_pixels = COLS*ROWS
 
 ORDER = neopixel.GRB
@@ -33,33 +33,34 @@ frames = (int)(len(data)/(3*COLS*ROWS));
 print(len(data))
 print(frames)
 GAMMA = 2
+animation = []
 for frame in range(0,frames):
 	print("{0}/{1}".format(frame,frames))
-	animation.append([]);
 	pixels[(int)(num_pixels*frame/frames)]=(64,0,0);
 	pixels.show();
 	for y in range(0,ROWS):
-		animation[frame].append([])
 		for x in range(0,COLS):
-			index = 3*(x+y*COLS)+frame*(COLS*ROWS*3)
-			#print("{0},{1} ({3}) {2}".format(x,y,index,frame))
-			animation[frame][y].append((
+			if((y%2)==1):
+				index = 3*((COLS-1-x)+y*COLS)+frame*(num_pixels*3)
+			else:
+				index = 3*(x+y*COLS)+frame*(num_pixels*3)
+			animation.append((
 				int(math.pow(int(data[index+0])/255.0,GAMMA)*255),
 				int(math.pow(int(data[index+1])/255.0,GAMMA)*255),
 				int(math.pow(int(data[index+2])/255.0,GAMMA)*255)
 			))
-		if((y%2)==1):
-			animation[frame][y].reverse()
 f.close()
 #print(animation)
 frame=0;
-while(True):
-	for i in range(0,num_pixels):
-		x = i%COLS;
-		y = math.floor(i/COLS)
-		pixels[i]=animation[frame][y][x]
-	pixels.show();
+ilace=0
+while(1):
 	#print(frame)
+	#ot = time.perf_counter()
+	for i in range(frame*num_pixels+ilace,frame*num_pixels+num_pixels,2):
+		pixels[i-frame*num_pixels]=animation[i]
+	pixels.show()
+	ilace=1-ilace
 	frame=(frame+1)%frames
-	#time.sleep(0.02)
+	#print(time.perf_counter()-ot)
+	#time.sleep(max(0,0.03-(time.perf_counter()-ot)))
 
