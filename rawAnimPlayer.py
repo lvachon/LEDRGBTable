@@ -16,13 +16,16 @@ num_pixels = COLS*ROWS
 
 with open(sys.argv[1],"rb") as file:
 	animation = bytearray(file.read())
-while(1):
+if len(sys.argv)>2 and (int)(sys.argv[2]):
+	loops = (int)(sys.argv[2])
+else:
+	loops = 1
+while(loops>0):
 	frame=1;
 	frames = (int)(len(animation)/(3*num_pixels))
 	while(frame<frames):
 		neopixel_write.neopixel_write(pin,animation[3*num_pixels*frame-COLS*3:3*num_pixels*(frame+1)-COLS*3])
 		frame=(frame+1)
 		time.sleep(0.01)
-	if len(sys.argv)<3:
-		break
+	loops-=1
 
