@@ -93,15 +93,15 @@ ws2811_led_t getNeighbor(int i,int n){
     int x = i%WIDTH;
     switch(n){
         case 0:
-            x+=1;
-            y+=0;
+            x+=-1;
+            y+=-1;
             break;
         case 1:
-            x+=1;
-            y+=1;
+            x+=-1;
+            y+=0;
             break;
         case 2:
-            x+=0;
+            x+=-1;
             y+=1;
             break;
         case 3:
@@ -109,24 +109,20 @@ ws2811_led_t getNeighbor(int i,int n){
             y+=-1;
             break;
         case 4:
-            x+=-1;
-            y+=-1;
-            break;
-        case 5:
-            x+=-1;
-            y+=0;
-            break;
-        case 6:
-            x+=-1;
-            y+=1;
-            break;
-        case 7:
             x+=0;
             y+=1;
             break;
-        case 8:
+        case 5:
+            x+=1;
+            y+=-1;
+            break;
+        case 6:
+            x+=1;
+            y+=0;
+            break;
+        case 7:
         default:
-            x+=-1;
+            x+=1;
             y+=1;
             break;
     }
