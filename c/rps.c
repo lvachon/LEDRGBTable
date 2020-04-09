@@ -136,6 +136,7 @@ ws2811_led_t getNeighbor(int i,int n){
 ws2811_led_t ROCK = 0x00FF0000;
 ws2811_led_t PAPER = 0x0000FF00;
 ws2811_led_t SCISSORS = 0x000000FF;
+ws2811_led_t NONE = 0x00000000;
 
 void setLED(int i, ws2811_led_t c){
     ledstring.channel[0].leds[i]=c;
@@ -152,15 +153,18 @@ void compCell(int i){
         if(n==PAPER){p++;continue;}
         if(n==SCISSORS){s++;continue;}
     }
-    if(myType==0){
-        if(r>=p && r>=s){
+    if(myType==NONE){
+        if(r>=p && r>=s && r>0){
             setLED(i,ROCK);
+            return;
         }
-        if(p>=r && p>=s){
+        if(p>=r && p>=s && p>0){
             setLED(i,PAPER);
+            return;
         }
-        if(s>=r && s>=p){
+        if(s>=r && s>=p && s>0){
             setLED(i,SCISSORS);
+            return;
         }
     }
     if(myType==ROCK && p>s){
@@ -200,7 +204,7 @@ int main(){
                 if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
                 if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
                 if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
-                ledstring.channel[0].leds[i]=0;
+                ledstring.channel[0].leds[i]=NONE;
             }
     	    for(int i=0;i<LED_COUNT;i++){//Copy framebuffer back to grid for next step
                     grid[i]=ledstring.channel[0].leds[i];
