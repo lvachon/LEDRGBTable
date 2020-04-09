@@ -10,6 +10,7 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <getopt.h>
+#include <time.h>
 
 
 #include "clk.h"
@@ -140,6 +141,9 @@ ws2811_led_t ROCK = 0x00FF0000;
 ws2811_led_t PAPER = 0x0000FF00;
 ws2811_led_t SCISSORS = 0x000000FF;
 
+void setLED(i,c){
+    ledstring.channel[0].leds[i]=c;
+}
 
 void compCell(int i){
     ws2811_led_t myType = grid[i];
@@ -161,12 +165,7 @@ void compCell(int i){
     }
 }
 
-void setLED(i,c){
-    ledstring.channel[0].leds[i]=c;
-}
-
-int main(int argc, char *argv[])
-{
+int main(){
     ws2811_return_t ret;
     
     setup_handlers();
@@ -177,10 +176,18 @@ int main(int argc, char *argv[])
         return ret;
     }
 
-    
+    srand(time(NULL));
+
+    for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
+        unsigned int rnd = rand()&3;
+        if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
+        if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
+        if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
+    }
+
     while(running){
         for(int i=0;i<LED_COUNT;i++){//Copy framebuffer back to memory for next step
-            grid[i]=edstring.channel[0].leds[i];
+            grid[i]=ledstring.channel[0].leds[i];
         }
         for(int i=0;i<LED_COUNT;i++){//Compute next step, saving it into framebugge
             compCell(i);
@@ -196,3 +203,4 @@ int main(int argc, char *argv[])
     printf ("\n");
     return ret;
 }
+
