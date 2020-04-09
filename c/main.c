@@ -117,22 +117,21 @@ int main(int argc, char *argv[])
         return ret;
     }
 
-    while (running)
-    {
-        for(int loop=0;loop<loops && running;loop++){
-        	for(int frame=0;frame<frames && running;frame++){
-	            for(int i=0;i<LED_COUNT && running;i++){
-		        	ledstring.channel[0].leds[i]=anim[3*(frame*LED_COUNT+i)+1]<<16|anim[3*(frame*LED_COUNT+i)+0]<<8|anim[3*(frame*LED_COUNT+i)+2];
-		        }
-		        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
-		        {
-		            fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
-		            break;
-		        }
-		        usleep(1000000 / 30);
-		    }
-		}
-    }
+    
+    for(int loop=0;loop<loops && running;loop++){
+    	for(int frame=0;frame<frames && running;frame++){
+            for(int i=0;i<LED_COUNT && running;i++){
+	        	ledstring.channel[0].leds[i]=anim[3*(frame*LED_COUNT+i)+1]<<16|anim[3*(frame*LED_COUNT+i)+0]<<8|anim[3*(frame*LED_COUNT+i)+2];
+	        }
+	        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
+	        {
+	            fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
+	            break;
+	        }
+	        usleep(1000000 / 30);
+	    }
+	}
+    
 
     ws2811_fini(&ledstring);
 
