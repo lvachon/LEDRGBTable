@@ -119,9 +119,9 @@ int main(int argc, char *argv[])
 
     while (running)
     {
-        for(int loop=0;loop<loops;loop++){
-        	for(int frame=0;frame<frames;frame++){
-	            for(int i=0;i<LED_COUNT;i++){
+        for(int loop=0;loop<loops && running;loop++){
+        	for(int frame=0;frame<frames && running;frame++){
+	            for(int i=0;i<LED_COUNT && running;i++){
 		        	ledstring.channel[0].leds[i]=anim[frame*3*LED_COUNT+i]<<16|anim[frame*3*LED_COUNT+i+1]<<8|anim[frame*3*LED_COUNT+i+2];
 		        }
 		        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
