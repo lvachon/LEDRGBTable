@@ -131,7 +131,7 @@ ws2811_led_t getNeighbor(int i,int n){
     while(x<0){x+=WIDTH;}
     while(x>=WIDTH){x-=WIDTH;}
     while(y<0){y+=HEIGHT;}
-    while(y>=WIDTH){x-=WIDTH;}
+    while(y>=HEIGHT){y-=HEIGHT;}
     return grid[x+y*WIDTH];
 }
 
@@ -190,14 +190,14 @@ int main(){
     
 
     while(running){
+        for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
+            unsigned int rnd = rand()&15;
+            if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
+            if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
+            if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
+            ledstring.channel[0].leds[i]=NONE;
+        }
         for(int frame=0;frame<1800 && running;frame++){
-    	    for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
-                unsigned int rnd = rand()&15;
-                if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
-                if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
-                if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
-                ledstring.channel[0].leds[i]=NONE;
-            }
     	    for(int i=0;i<LED_COUNT;i++){//Copy framebuffer back to grid for next step
                     grid[i]=ledstring.channel[0].leds[i];
             }
