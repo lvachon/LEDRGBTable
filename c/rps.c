@@ -36,6 +36,8 @@
 #define HEIGHT                  16
 #define LED_COUNT               (WIDTH * HEIGHT)
 
+#define SLOW                    256
+
 int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
@@ -143,43 +145,33 @@ void setLED(int i, ws2811_led_t c){
 }
 
 void compCell(int i){
-    ws2811_led_t myType = grid[i];
+    ws2811_led_t out;
     int r=0;
     int p=0;
     int s=0;
+    int mr = (grid[i]&ROCK)>>16;
+    int mp = (grid[i]&PAPER)>>8;
+    int ms = (grid[i]&SCISSORS);
     for(int j=0;j<9;j++){
         ws2811_led_t n = getNeighbor(i,j);
-        if(n==ROCK){r++;continue;}
-        if(n==PAPER){p++;continue;}
-        if(n==SCISSORS){s++;continue;}
-    }
-    if(myType==NONE){
-        if(r>=p && r>=s && r>0){
-            setLED(i,ROCK);
-            return;
-        }
-        if(p>=r && p>=s && p>0){
-            setLED(i,PAPER);
-            return;
-        }
-        if(s>=r && s>=p && s>0){
-            setLED(i,SCISSORS);
-            return;
-        }
-    }
-    if(myType==ROCK && p>s){
-        setLED(i,PAPER);
-        return;
-    }
-    if(myType==PAPER && s>r){
-        setLED(i,SCISSORS);
-        return;
-    }
-    if(myType==SCISSORS && r>p){
-        setLED(i,ROCK);
-        return;
-    }
-    
+        r+=(n&ROCK)>>16;
+        p+=(n&PAPER)>>8;
+        s+=(n&SCISSORS);
+    } 
+    mr-=p/SLOW;
+    mr+=s/SLOW;
+    mp-=s/SLOW;
+    mp+=r/SLOW;
+    ms-=r/SLOW;
+    ms+=p/SLOW;
+    if(mr<0){mr=0;}
+    if(mr>255){mr=255;}
+    if(mp<0){mp=0;}
+    if(mp>255){mp=255;}
+    if(ms<0){ms=0;}
+    if(ms>255){ms=255;}
+    out = mr<<16|mp<<8|ms;
+    setLED(i,out);    
 }
 
 int main(){
@@ -200,7 +192,7 @@ int main(){
     while(running){
         for(int frame=0;frame<1800 && running;frame++){
     	    for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
-                unsigned int rnd = rand()&8;
+                unsigned int rnd = rand()&15;
                 if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
                 if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
                 if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
@@ -225,4 +217,5 @@ int main(){
     printf ("\n");
     return ret;
 }
+
 
