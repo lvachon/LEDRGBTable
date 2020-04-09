@@ -156,15 +156,30 @@ void compCell(int i){
         if(n==PAPER){p++;continue;}
         if(n==SCISSORS){s++;continue;}
     }
+    if(myType==0){
+        if(r>=p && r>=s){
+            setLED(i,ROCK);
+        }
+        if(p>=r && p>=s){
+            setLED(i,PAPER);
+        }
+        if(s>=r && s>=p){
+            setLED(i,SCISSORS);
+        }
+    }
     if(myType==ROCK && p>s){
         setLED(i,PAPER);
+        return;
     }
     if(myType==PAPER && s>r){
         setLED(i,SCISSORS);
+        return;
     }
     if(myType==SCISSORS && r>p){
         setLED(i,ROCK);
+        return;
     }
+    
 }
 
 int main(){
@@ -180,25 +195,19 @@ int main(){
 
     srand(time(NULL));
 
-    for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
-        unsigned int rnd = rand()&3;
-        if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
-        if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
-        if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
-	i--;
-    }
+    
 
     while(running){
         for(int frame=0;frame<1800 && running;frame++){
-	    for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
-	        unsigned int rnd = rand()&3;
-	        if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
-	        if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
-	        if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
-	        i--;
-	    }
-	    for(int i=0;i<LED_COUNT;i++){//Copy framebuffer back to grid for next step
-                grid[i]=ledstring.channel[0].leds[i];
+    	    for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
+                unsigned int rnd = rand()&8;
+                if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
+                if(rnd==1){ledstring.channel[0].leds[i]=PAPER;continue;}
+                if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
+                ledstring.channel[0].leds[i]=0;
+            }
+    	    for(int i=0;i<LED_COUNT;i++){//Copy framebuffer back to grid for next step
+                    grid[i]=ledstring.channel[0].leds[i];
             }
             for(int i=0;i<LED_COUNT;i++){//Compute next step, saving it into framebuffer
                 compCell(i);
@@ -210,6 +219,7 @@ int main(){
             usleep(1000000 / 30);
         }
     }
+
     ws2811_fini(&ledstring);
 
     printf ("\n");
