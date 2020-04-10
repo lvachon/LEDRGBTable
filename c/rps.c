@@ -36,7 +36,7 @@
 #define HEIGHT                  16
 #define LED_COUNT               (WIDTH * HEIGHT)
 
-#define SLOW                    256
+#define SLOW                    64
 
 int width = WIDTH;
 int height = HEIGHT;
@@ -174,7 +174,7 @@ void compCell(int i){
     setLED(i,out);    
 }
 
-int main(){
+int main(int argc, char **argv){
     ws2811_return_t ret;
     
     setup_handlers();
@@ -187,9 +187,13 @@ int main(){
 
     srand(time(NULL));
 
-    
+    int loops = -1;
+    if(argc>1){
+	loops = atoi(argv[1]);
+    }
 
-    while(running){
+    while(running && (loops==-1 || loops>0)){
+	loops--;
         for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
             unsigned int rnd = rand()&15;
             if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
