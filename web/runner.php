@@ -7,7 +7,7 @@ while(true){
 	        $file = $a[rand(0,floor(count($a)-1))];
 	        $secs = 0.03 * filesize($file)/(31*16*3);
 	        $loops = max(1,floor(30/$secs));
-		$cmd = "../rawPlayer {$file} {$loops}";
+		$cmd = "../c/rawPlayer {$file} {$loops}";
 	}
 	echo(date("M-d-Y H:i:s")." Executing {$cmd}...\n");
 	file_put_contents("curcmd",$cmd);
