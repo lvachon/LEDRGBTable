@@ -8,11 +8,15 @@ if(isset($_GET['raw'])){
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['rps'])){
-	$cmd = "../rps {$loops} 1";
+	$cmd = "../rps 1";
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['black'])){
 	$cmd = "../python/black.py";
+	file_put_contents("webcmd",$cmd);
+}
+if(isset($_GET['matrix'])){
+	$cmd = "../c/matrix";
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['rand'])){
