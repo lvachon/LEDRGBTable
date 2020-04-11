@@ -136,7 +136,11 @@ int main(){
             }
             for(int i=0;i<WIDTH;i++){
                 dropY[i]++;
-                ledstring.channel[0].leds[i+dropY[i]*WIDTH]=0x00FFFFFF;
+                x=i;
+                if(!(dropY[i]%2)){
+                    x=WIDTH-1-x;
+                }
+                ledstring.channel[0].leds[x+dropY[i]*WIDTH]=0x00FFFFFF;
             }
             if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
                 fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
