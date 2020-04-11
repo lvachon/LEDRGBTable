@@ -1,7 +1,7 @@
 <?php
 while(true){
 	$cmd = file_get_contents("webcmd");
-	if(!strlen($cmd)){sleep(0.25);continue;}
+	if(!strlen($cmd)){echo("SLEEP\n");sleep(1);continue;}
 	if($cmd=="rand"){
 		$a = glob("../raws/*.raw");
 	        $file = $a[rand(0,floor(count($a)-1))];
