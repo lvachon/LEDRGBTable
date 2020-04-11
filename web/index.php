@@ -31,9 +31,26 @@ if(isset($_GET['rand'])){
 			<h2>Vids</h2>
 			<?php 
 				$a = glob("../raws/*.raw");
+				$im = imagecreatetruecolor(31,16);
 				foreach($a as $file){
+					$f = fopen($file,"rb");
+					for($i=0;$i<31*16;$i++){
+						$y=floor($i/31);
+						$x=$i%31;
+						if(!($y%2)){$x=30-$x;}
+						$r = fread($f,1);
+						$g = fread($f,1);
+						$b = fread($f,1);
+						$c = imagecolorallocate($im,$r,$g,$b);
+						imagesetpixel($im,$x,$y,$c);
+					}
+					fclose($f);
+					ob_flush();
+					ob_start();
+					imagepng($im);
+					$img = ob_get_clean();
 					$bn = basename($file,".raw");
-					echo "<a href='?raw={$bn}'>{$bn}</a><br/>";
+					echo "<a href='?raw={$bn}'>{$bn}<img src='data:image/png;base64, ".base64_encode($img)."'/></a><br/>";
 				}
 
 			?>
