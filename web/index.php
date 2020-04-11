@@ -16,7 +16,7 @@ if(isset($_GET['black'])){
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['matrix'])){
-	$cmd = "../c/matrix";
+	$cmd = "../c/matrix 1";
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['rand'])){
