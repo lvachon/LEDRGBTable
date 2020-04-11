@@ -1,7 +1,9 @@
 <?php
 if(isset($_GET['raw'])){
-	$loops = intval($_GET['loops']);
-	$fname = escapeshellarg ( "../raws/".$_GET['raw'] );
+	$file = "../raws/{$_GET['raw']}.raw";
+        $secs = 0.03 * filesize($file)/(31*16*3);
+        $loops = max(1,floor(60/$secs));
+	$fname = escapeshellarg ( "../raws/".$_GET['raw'].".raw" );
 	$cmd = "../rawPlayer {$fname} {$loops}";
 	file_put_contents("webcmd",$cmd);
 }
@@ -44,6 +46,7 @@ if(isset($_GET['rand'])){
 		</div>
 	</body>
 </html>
+
 
 
 
