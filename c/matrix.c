@@ -124,13 +124,13 @@ int main(){
         
         for(int frame=0;frame<1800 && running;frame++){
     	    for(int i=0;i<LED_COUNT;i++){//Fade
-                unsigned char r = (ledstring.channel[0].leds[i] & 0x00FF0000)>>16;
+                unsigned char r = (ledstring.channel[0].leds[i] & 0x000000FF);
                 unsigned char g = (ledstring.channel[0].leds[i] & 0x0000FF00)>>8;
                 if(g>7){
-                    g-=8;
+                    g-=7;
                 }
                 if(r>63){
-                    r-=64;
+                    r-=63;
                 }
                 ledstring.channel[0].leds[i] = r<<16|g<<8|r;
             }
