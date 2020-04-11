@@ -77,7 +77,7 @@ if(isset($_GET['rand'])){
 		<div>
 			<h2>Progs</h2>
 			<a href='?rps=1'>RPS</a><br/>
-			<a href='?rps=1'>Matrix</a><br/>
+			<a href='?matrix=1'>Matrix</a><br/>
 			<a href='?black=1'>Off</a>
 		</div>
 	</body>
