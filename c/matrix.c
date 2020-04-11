@@ -136,7 +136,7 @@ int main(){
             }
             for(int i=0;i<WIDTH;i++){
                 dropY[i]++;
-                x=i;
+                int x=i;
                 if(!(dropY[i]%2)){
                     x=WIDTH-1-x;
                 }
