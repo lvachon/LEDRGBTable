@@ -55,7 +55,7 @@ if(isset($_GET['rand'])){
 					for($i=0;$i<31*16;$i++){
 						$y=floor($i/31);
 						$x=$i%31;
-						if(($y%2)){$x=30-$x;}
+						if(!($y%2)){$x=30-$x;}
 						$g = ord(fgetc($f));
 						$r = ord(fgetc($f));
 						$b = ord(fgetc($f));
