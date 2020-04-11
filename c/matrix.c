@@ -100,7 +100,7 @@ void setLED(int i, ws2811_led_t c){
 
 unsigned char dropY[WIDTH];
 
-int main(){
+int main(int argc, char **argv){
     ws2811_return_t ret;
     
     setup_handlers();
@@ -116,12 +116,17 @@ int main(){
 
     srand(time(NULL));
 
+    int loops = -1;
+    if(argc>1){
+       loops = atoi(argv[1]);
+    }
+
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
         ledstring.channel[0].leds[i]=0;
     }
 
-    while(running){
-        
+    while(running && (loops==-1 || loops>0)){
+        loops--;
         for(int frame=0;frame<1800 && running;frame++){
     	    for(int i=0;i<LED_COUNT;i++){//Fade
                 unsigned char r = (ledstring.channel[0].leds[i] & 0x000000FF);
