@@ -18,3 +18,5 @@ imagepng($im,"{$outname}_strip.png");
 exec("magick convert {$outname}_strip.png -compress none {$outname}_strip.ppm");
 exec("del temp*.png");
 exec("python ppm2bytes.py {$outname}_strip.ppm {$outname}.raw");
+exec("del *.png");
+exec("del *.ppm");
