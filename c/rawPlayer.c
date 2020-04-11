@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 
     
     for(int loop=0;loop<loops && running;loop++){
-    	for(int frame=1;frame<frames && running;frame++){
+    	for(int frame=0;frame<frames && running;frame++){
             for(int i=0;i<LED_COUNT && running;i++){
 	        	ledstring.channel[0].leds[i]=anim[3*(frame*LED_COUNT+i)+1]<<16|anim[3*(frame*LED_COUNT+i)+0]<<8|anim[3*(frame*LED_COUNT+i)+2];
 	        }
