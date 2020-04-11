@@ -189,7 +189,7 @@ int main(int argc, char **argv){
 
     int loops = -1;
     if(argc>1){
-	loops = atoi(argv[1]);
+	   loops = atoi(argv[1]);
     }
 
     while(running && (loops==-1 || loops>0)){
