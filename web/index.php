@@ -37,7 +37,7 @@ if(isset($_GET['rand'])){
 		</style>
 	</head>
 	<body>
-		<h1>LEDREGTable</h1>
+		<h1>LEDRGBTable</h1>
 		<div class='status'>
 			Next command: <?php echo file_get_contents("webcmd");?><br/>
 			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
