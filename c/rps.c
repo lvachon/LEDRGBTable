@@ -193,7 +193,9 @@ int main(int argc, char **argv){
     }
 
     while(running && (loops==-1 || loops>0)){
-	loops--;
+	if(loops>0){
+	    loops--;
+	}
         for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
             unsigned int rnd = rand()&15;
             if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
