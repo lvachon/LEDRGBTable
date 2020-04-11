@@ -4,11 +4,11 @@ if(isset($_GET['raw'])){
         $secs = 0.03 * filesize($file)/(31*16*3);
         $loops = max(1,floor(30/$secs));
 	$fname = escapeshellarg ( "../raws/".$_GET['raw'].".raw" );
-	$cmd = "../rawPlayer {$fname} {$loops}";
+	$cmd = "../c/rawPlayer {$fname} {$loops}";
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['rps'])){
-	$cmd = "../rps 1";
+	$cmd = "../c/rps 1";
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['black'])){
