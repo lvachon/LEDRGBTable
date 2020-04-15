@@ -147,7 +147,7 @@ int main(int argc, char **argv){
                 }
                 if(dropY[i]>=HEIGHT){
                     if(!(rand()&63) || dropY[i]==200){
-                        dropY[i]=0;
+                        dropY[i]=-1;
                     }
                 }else{
                     ledstring.channel[0].leds[x+dropY[i]*WIDTH]=0x00FFFFFF;
