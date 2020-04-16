@@ -95,6 +95,11 @@ static void setup_handlers(void)
 
 void setLEDi(int i, ws2811_led_t c){
     if(i<0||i>=LED_COUNT){return;}
+    int x=i%WIDTH;
+    int y=i/WIDTH;
+    if(y%2){
+        i=(WIDTH-1-x)+y*WIDTH;
+    }
     ledstring.channel[0].leds[i]=c;
 }
 
