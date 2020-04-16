@@ -154,7 +154,7 @@ ws2811_led_t getNeighbor(int i,int n){
 void compCell(int i, ws2811_led_t c){
     int n=0;
     for(int j=0;j<8;j++){
-        if(getNeighbor(i,j)==c){
+        if(getNeighbor(i,j)&c>0){
             n++;
         }
     }
