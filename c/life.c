@@ -214,7 +214,7 @@ int main(int argc, char **argv){
                 break;
             }
             for(int i=0;i<LED_COUNT;i++){
-                grid[i]=ledstring.channel[i].leds[i];
+                grid[i]=ledstring.channel[0].leds[i];
             }
             usleep(1000000 / 30);
         }
