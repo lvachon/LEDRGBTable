@@ -128,6 +128,7 @@ void drawDigit(unsigned char n, unsigned char y, unsigned char x){
         for(int dstX=x;dstX<x+FONTW;dstX++){
             int mask = nums[index+offset]<<16|nums[index+offset+1]<<8|nums[index+offset+2];
             setLED(dstX,dstY,mask);
+            offset++;
         }
     }
 }
