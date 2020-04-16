@@ -49,6 +49,8 @@ char clockString[14];
 time_t rawtime;
 struct tm * timeinfo;
 
+unsigned char baseHue=0;
+
 int clear_on_exit = 0;
 
 
@@ -120,6 +122,33 @@ unsigned char* readFileBytes(const char *name)
     return ret;  
 }
 
+ws2811_led_t hue2rgb(unsigned char hue){
+   unsigned char r=0;
+   unsigned char g=0;
+   unsigned char b=0;
+   if(hue<85){
+        r = (hue * 3);
+        g = (255 - hue*3);
+        b = 0;
+    }else{
+        if(hue < 170){
+            hue -= 85;
+            r = 255 - pos*3;
+            g = 0;
+            b = pos*3;
+        }else{
+            hue -= 170
+            r = 0;
+            g = pos*3;
+            b = 255 - pos*3;
+        }
+    }
+    return (ws2811_led_t)(r<<16|g<<8|b);
+}
+
+ws2811_led_t xy2c(x,y){
+    return hue2rgb(baseHue+x+y);
+}
 
 void drawDigit(unsigned char n, unsigned char x, unsigned char y){
     int offset = 3*n*FONTH*FONTW;
@@ -127,11 +156,13 @@ void drawDigit(unsigned char n, unsigned char x, unsigned char y){
     for(int dstY=y;dstY<y+FONTH;dstY++){
         for(int dstX=x;dstX<x+FONTW;dstX++){
             int mask = nums[index+offset]<<16|nums[index+offset+1]<<8|nums[index+offset+2];
-            setLED(dstX,dstY,mask);
+            setLED(dstX,dstY,mask & xy2c(dstX,dstY));
             offset+=3;
         }
     }
 }
+
+
 
 int c2i(char c){
     return (int)(c)-48;
@@ -172,7 +203,7 @@ int main(int argc, char **argv){
                 drawDigit(c2i(clockString[n]),n*5,0);
                 drawDigit(c2i(clockString[n+6]),n*5,8);    
             }
-            
+            baseHue++;
             
             if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
                 fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));

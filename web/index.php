@@ -20,7 +20,7 @@ if(isset($_GET['matrix'])){
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['clock'])){
-	$cmd = "../c/clock 1";
+	$cmd = "cd ../c/;./clock 1";
 	file_put_contents("webcmd",$cmd);
 }
 if(isset($_GET['rand'])){
