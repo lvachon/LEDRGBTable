@@ -102,6 +102,9 @@ void setLEDi(int i, ws2811_led_t c){
 
 void setLED(int x, int y, ws2811_led_t c){
     int i=x+y*WIDTH;
+    if(y%2){
+        i=(WIDTH-1-x)+y*WIDTH;
+    }
     setLEDi(i,c);
 }
 
