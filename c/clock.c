@@ -122,7 +122,7 @@ unsigned char* readFileBytes(const char *name)
 
 
 void drawDigit(unsigned char n, unsigned char x, unsigned char y){
-    int offset = 3*n*FONTH;
+    int offset = 3*n*FONTH*FONTW;
     int index=0;
     for(int dstY=y;dstY<y+FONTH;dstY++){
         for(int dstX=x;dstX<x+FONTW;dstX++){
