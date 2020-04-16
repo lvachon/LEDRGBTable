@@ -121,7 +121,7 @@ unsigned char* readFileBytes(const char *name)
 }
 
 
-void drawDigit(unsigned char n, unsigned char y, unsigned char x){
+void drawDigit(unsigned char n, unsigned char x, unsigned char y){
     int offset = 3*n*FONTH;
     int index=0;
     for(int dstY=y;dstY<y+FONTH;dstY++){
