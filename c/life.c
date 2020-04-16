@@ -154,16 +154,16 @@ ws2811_led_t getNeighbor(int i,int n){
 void compCell(int i, ws2811_led_t c){
     int n=0;
     for(int j=0;j<8;j++){
-        if(getNeighbor(i,j)&c>0){
+        if((getNeighbor(i,j)&c)>0){
             n++;
         }
     }
-    if(grid[i]&c>0){//Alive?
+    if((grid[i]&c)>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
             setLEDi(i, grid[i]&(~c));//Kill
         }
     }else{//Dead
-        if(n==3){
+        if(n==3){//Just right?
             setLEDi(i, grid[i]|c);//Birth
         }
     }
@@ -195,9 +195,9 @@ int main(int argc, char **argv){
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
         int r = rand()&7;
         ledstring.channel[0].leds[i]=0;
-        if(r&4){ledstring.channel[0].leds[i]|=RED;}
-        if(r&2){ledstring.channel[0].leds[i]|=GREEN;}
-        if(r&1){ledstring.channel[0].leds[i]|=BLUE;}
+        if((r&4)>0){ledstring.channel[0].leds[i]|=RED;}
+        if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
+        if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
     }
 
     while(running && (loops==-1 || loops>0)){
