@@ -95,8 +95,6 @@ static void setup_handlers(void)
     sigaction(SIGTERM, &sa, NULL);
 }
 
-ws2811_led_t grid[LED_COUNT];
-
 void setLEDi(int i, ws2811_led_t c){
     if(i<0||i>=LED_COUNT){return;}
     ledstring.channel[0].leds[i]=c;
@@ -124,7 +122,7 @@ void drawDigit(unsigned char n, unsigned char y, unsigned char x){
     int offset = 3*n*FONTH;
     int index=0;
     for(int dstY=y;dstY<y+FONTH;dstY++){
-        for(int dstX=x;dstY<x+FONTW;dstX++){
+        for(int dstX=x;dstX<x+FONTW;dstX++){
             int mask = nums[index+offset]<<16|nums[index+offset+1]<<8|nums[index+offset+2];
             setLED(dstX,dstY,mask);
         }
@@ -166,6 +164,7 @@ int main(int argc, char **argv){
             time (&rawtime);
             timeinfo = localtime (&rawtime);
     	    strftime(clockString,12,"%m%d%y%H%M%S",timeinfo);
+            print(clockString);
             for(int n=0;n<6;n++){
                 drawDigit(c2i(clockString[n]),n*5,0);
                 drawDigit(c2i(clockString[n+6]),n*5,8);    
