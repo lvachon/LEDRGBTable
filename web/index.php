@@ -19,6 +19,10 @@ if(isset($_GET['matrix'])){
 	$cmd = "../c/matrix 1";
 	file_put_contents("webcmd",$cmd);
 }
+if(isset($_GET['clock'])){
+	$cmd = "../c/clock 1";
+	file_put_contents("webcmd",$cmd);
+}
 if(isset($_GET['rand'])){
 	$a = glob("../raws/*.raw");
 	$file = $a[rand(0,floor(count($a)-1))];
@@ -33,7 +37,7 @@ if(isset($_GET['rand'])){
 			.vid {margin:2px;border:solid 1px #888888;height:2.5cm;}
 			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
-			.status {font-size:0.25cm;}
+			.status {font-size:1cm;}
 		</style>
 	</head>
 	<body>
@@ -78,6 +82,7 @@ if(isset($_GET['rand'])){
 			<h2>Progs</h2>
 			<a href='?rps=1'>RPS</a><br/>
 			<a href='?matrix=1'>Matrix</a><br/>
+			<a href='?clock=1'>Clock</a><br/>
 			<a href='?black=1'>Off</a>
 		</div>
 	</body>
