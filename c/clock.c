@@ -97,14 +97,14 @@ static void setup_handlers(void)
 
 ws2811_led_t grid[LED_COUNT];
 
-void setLED(int i, ws2811_led_t c){
+void setLEDi(int i, ws2811_led_t c){
     if(i<0||i>=LED_COUNT){return;}
     ledstring.channel[0].leds[i]=c;
 }
 
 void setLED(int x, int y, ws2811_led_t c){
     int i=x+y*WIDTH;
-    setLED(i,c);
+    setLEDi(i,c);
 }
 
 unsigned char* readFileBytes(const char *name)  
@@ -112,7 +112,6 @@ unsigned char* readFileBytes(const char *name)
     FILE *fl = fopen(name, "r");  
     fseek(fl, 0, SEEK_END);  
     long len = ftell(fl);
-    frames = len/(3*LED_COUNT);
     unsigned char *ret = malloc(len);  
     fseek(fl, 0, SEEK_SET);  
     fread(ret, 1, len, fl);  
@@ -142,11 +141,7 @@ int main(int argc, char **argv){
     
     setup_handlers();
 
-    nums = readFileBytes('7seg.raw');
-
-    for(int i=0;i<WIDTH;i++){
-        dropY[i]=0;
-    }
+    nums = readFileBytes("7seg.raw");
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
     {
@@ -172,8 +167,8 @@ int main(int argc, char **argv){
             timeinfo = localtime (&rawtime);
     	    strftime(closkString,12,"%m%d%y%H%M%S",timeinfo);
             for(int n=0;n<6;n++){
-                drawDigit(c2i[n],n*5,0);
-                drawDigit(c2i[n+6],n*5,8);    
+                drawDigit(c2i(clockString[n]),n*5,0);
+                drawDigit(c2i(clockString[n+6]),n*5,8);    
             }
             
             
