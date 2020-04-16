@@ -169,7 +169,7 @@ int main(int argc, char **argv){
             timeinfo = localtime (&rawtime);
     	    strftime(clockString,12,"%m%d%y%H%M%S",timeinfo);
             for(int n=0;n<6;n++){
-                printf(itoa(c2i(clockString[11])));
+                fprintf(stdout,"%d\n",c2i(clockString[11]));
                 drawDigit(c2i(clockString[n]),n*5,0);
                 drawDigit(c2i(clockString[n+6]),n*5,8);    
             }
