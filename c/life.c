@@ -158,7 +158,7 @@ void compCell(int i, ws2811_led_t c){
             n++;
         }
     }
-    if(grid[i]&0xFF0000){//Alive?
+    if(grid[i]&c>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
             setLEDi(i, grid[i]&(~c));//Kill
         }
