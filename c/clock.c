@@ -133,14 +133,14 @@ ws2811_led_t hue2rgb(unsigned char hue){
     }else{
         if(hue < 170){
             hue -= 85;
-            r = 255 - pos*3;
+            r = 255 - hue*3;
             g = 0;
-            b = pos*3;
+            b = hue*3;
         }else{
-            hue -= 170
+            hue -= 170;
             r = 0;
-            g = pos*3;
-            b = 255 - pos*3;
+            g = hue*3;
+            b = 255 - hue*3;
         }
     }
     return (ws2811_led_t)(r<<16|g<<8|b);
