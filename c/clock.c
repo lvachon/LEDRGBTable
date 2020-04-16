@@ -165,7 +165,7 @@ int main(int argc, char **argv){
         for(int frame=0;frame<1800 && running;frame++){
             time (&rawtime);
             timeinfo = localtime (&rawtime);
-    	    strftime(closkString,12,"%m%d%y%H%M%S",timeinfo);
+    	    strftime(clockString,12,"%m%d%y%H%M%S",timeinfo);
             for(int n=0;n<6;n++){
                 drawDigit(c2i(clockString[n]),n*5,0);
                 drawDigit(c2i(clockString[n+6]),n*5,8);    
