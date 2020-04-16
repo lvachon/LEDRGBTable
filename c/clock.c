@@ -146,7 +146,7 @@ ws2811_led_t hue2rgb(unsigned char hue){
     return (ws2811_led_t)(r<<16|g<<8|b);
 }
 
-ws2811_led_t xy2c(x,y){
+ws2811_led_t xy2c(unsigned char x,unsigned char y){
     return hue2rgb(baseHue+x+y);
 }
 
