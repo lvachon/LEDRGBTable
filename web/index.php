@@ -23,6 +23,10 @@ if(isset($_GET['clock'])){
 	$cmd = "cd ../c/;./clock 1";
 	file_put_contents("webcmd",$cmd);
 }
+if(isset($_GET['life'])){
+	$cmd = "cd ../c/;./life 1";
+	file_put_contents("webcmd",$cmd);
+}
 if(isset($_GET['rand'])){
 	$a = glob("../raws/*.raw");
 	$file = $a[rand(0,floor(count($a)-1))];
@@ -81,6 +85,7 @@ if(isset($_GET['rand'])){
 		<div>
 			<h2>Progs</h2>
 			<a href='?rps=1'>RPS</a><br/>
+			<a href='?life=1'>Life</a><br/>
 			<a href='?matrix=1'>Matrix</a><br/>
 			<a href='?clock=1'>Clock</a><br/>
 			<a href='?black=1'>Off</a>
