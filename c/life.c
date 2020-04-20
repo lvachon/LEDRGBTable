@@ -164,7 +164,7 @@ ws2811_led_t getNeighbor(int i,int n){
     while(y>=HEIGHT){y-=HEIGHT;}
     return grid[x+y*WIDTH];
 }
-
+char ns[LED_COUNT];
 void compCell(int i, ws2811_led_t c){
     int n=0;
     for(int j=0;j<8;j++){
@@ -172,6 +172,7 @@ void compCell(int i, ws2811_led_t c){
             n++;
         }
     }
+    ns[i]=(char)(n+48);
     if((grid[i]&c)>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
             setLEDi(i, grid[i]&(~c));//Kill
@@ -224,7 +225,7 @@ void preview(){
                 break;
         }
         attron(COLOR_PAIR(color));
-        mvaddch(y,x,'*');
+        mvaddch(y,x,ns[i]);
         attroff(COLOR_PAIR(color));
     }
     refresh();
