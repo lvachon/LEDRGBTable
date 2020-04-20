@@ -279,7 +279,7 @@ int main(int argc, char **argv){
                 compCell(i, GREEN);
                 compCell(i, BLUE);
             }
-            preview();
+            //preview();
             if(!render()){break;}
             bool allSame=true;
             for(int i=0;i<LED_COUNT;i++){
