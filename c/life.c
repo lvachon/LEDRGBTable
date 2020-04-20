@@ -54,11 +54,10 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-ws2811_led_t gridX[LED_COUNT];
-ws2811_led_t gridY[LED_COUNT];
+ws2811_led_t gridA[LED_COUNT];
+ws2811_led_t gridB[LED_COUNT];
 
-ws2811_led_t (*grid)[LED_COUNT] = &gridX;
-ws2811_led_t (*gridB)[LED_COUNT] = &gridY;
+ws2811_led_t (*grid)[LED_COUNT] = &gridA;
 
 int clear_on_exit = 0;
 
@@ -223,7 +222,7 @@ bool render(){
         if(y%2){
             j=(WIDTH-1-x)+y*WIDTH;
         }
-        ledstring.channel[0].leds[j]=*gridB[i];
+        ledstring.channel[0].leds[j]=*grid[i];
     }
     if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
         fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
@@ -289,11 +288,9 @@ int main(int argc, char **argv){
             
             swapped=!swapped;
             if(swapped){
-                grid=&gridX;
-                gridB=&gridY;
+                grid=&gridA;
             }else{
-                grid=&gridY;
-                gridB=&gridX;
+                grid=&gridB;
             }
 
             clock_gettime(CLOCK_REALTIME, &ts); 
