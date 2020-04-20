@@ -272,7 +272,7 @@ int main(int argc, char **argv){
     
     preview();
     while(running && (loops==-1 || loops>0)){
-        loops--;
+        if(loops>0){loops--;}
         for(int frame=0;frame<1800 && running;frame++){
             for(int i=0;i<LED_COUNT;i++){
                 compCell(i, RED);
