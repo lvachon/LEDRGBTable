@@ -262,11 +262,11 @@ int main(int argc, char **argv){
 
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
         int r = rand()&15;
-        ledstring.channel[0].leds[i]=0;
+        grid[i]=0;
         if(r<8){
-            if((r&4)>0){ledstring.channel[0].leds[i]|=RED;}
-            //if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
-            //if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
+            if((r&4)>0){grid[i]|=RED;}
+            //if((r&2)>0){grid[i]|=GREEN;}
+            //if((r&1)>0){grid[i]|=BLUE;}
         }
     }
     preview();
