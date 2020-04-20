@@ -266,7 +266,8 @@ int main(int argc, char **argv){
         if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
         if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
     }
-
+    preview();
+    sleep(1000000 * 2);
     while(running && (loops==-1 || loops>0)){
         loops--;
         for(int frame=0;frame<1800 && running;frame++){
