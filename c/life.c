@@ -178,7 +178,7 @@ void compCell(int i, ws2811_led_t c){
         }
     }else{//Dead
         if(n==3){//Just right?
-            setLEDi(i, grid[i]|c);//Birth
+            //setLEDi(i, grid[i]|c);//Birth
         }
     }
 }
