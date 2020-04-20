@@ -54,6 +54,7 @@ int height = HEIGHT;
 int led_count = LED_COUNT;
 
 ws2811_led_t grid[LED_COUNT];
+ws2811_led_t gridB[LED_COUNT];
 
 
 int clear_on_exit = 0;
@@ -100,24 +101,6 @@ static void setup_handlers(void)
 
     sigaction(SIGINT, &sa, NULL);
     sigaction(SIGTERM, &sa, NULL);
-}
-
-void setLEDi(int i, ws2811_led_t c){
-    if(i<0||i>=LED_COUNT){return;}
-    int x=i%WIDTH;
-    int y=i/WIDTH;
-    if(y%2){
-        i=(WIDTH-1-x)+y*WIDTH;
-    }
-    ledstring.channel[0].leds[i]=c;
-}
-
-void setLED(int x, int y, ws2811_led_t c){
-    int i=x+y*WIDTH;
-    if(y%2){
-        i=(WIDTH-1-x)+y*WIDTH;
-    }
-    setLEDi(i,c);
 }
 
 ws2811_led_t getNeighbor(int i,int n){
@@ -175,11 +158,11 @@ void compCell(int i, ws2811_led_t c){
     ns[i]=(char)(n+48);
     if((grid[i]&c)>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
-            setLEDi(i, grid[i]&(~c));//Kill
+            gridB[i] = grid[i]&(~c);//Kill
         }
     }else{//Dead
         if(n==3){//Just right?
-            //setLEDi(i, grid[i]|c);//Birth
+           gridB[i] = grid[i]|c;//Birth
         }
     }
 }
@@ -232,6 +215,24 @@ void preview(){
 }
 
 
+void render(){
+for(int i=0;i<LED_COUNT;i++){
+    int x = i%WIDTH;
+    int y = i/WIDTH;
+    int j = i;
+    if(y%2){
+        int j=(WIDTH-1-x)+y*WIDTH;
+    }
+    ledstring.channel[0].leds[j]=gridB[i];
+    if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
+        fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
+        break;
+    }
+
+}
+
+
+
 
 int main(int argc, char **argv){
     ws2811_return_t ret;
@@ -276,23 +277,13 @@ int main(int argc, char **argv){
         for(int frame=0;frame<1800 && running;frame++){
             for(int i=0;i<LED_COUNT;i++){
                 compCell(i, RED);
-                compCell(i, GREEN);
-                compCell(i, BLUE);
+                //compCell(i, GREEN);
+                //compCell(i, BLUE);
             }
             preview();
-            if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
-                fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
-                break;
-            }
+            render();
             for(int i=0;i<LED_COUNT;i++){
-                int y = i/WIDTH;
-                if(y%2){
-                    int x=i%WIDTH;
-                    x=WIDTH-1-x;
-                    i=y*WIDTH+x;    
-                }
-                grid[i]=ledstring.channel[0].leds[i];
-
+                grid[i]=gridB[i];
             }
             usleep(1000000 / 1);
         }
