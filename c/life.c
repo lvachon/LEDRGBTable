@@ -260,7 +260,7 @@ int main(int argc, char **argv){
     }
 
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
-        int r = rand()&7;
+        int r = rand()&15;
         ledstring.channel[0].leds[i]=0;
         if((r&4)>0){ledstring.channel[0].leds[i]|=RED;}
         if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
@@ -284,7 +284,7 @@ int main(int argc, char **argv){
             for(int i=0;i<LED_COUNT;i++){
                 grid[i]=ledstring.channel[0].leds[i];
             }
-            usleep(1000000 / 30);
+            usleep(1000000 / 1);
         }
     }
 
