@@ -57,7 +57,7 @@ int led_count = LED_COUNT;
 ws2811_led_t gridA[LED_COUNT];
 ws2811_led_t gridB[LED_COUNT];
 
-ws2811_led_t grid[LED_COUNT] = gridA;
+ws2811_led_t (*grid)[LED_COUNT] = &gridA;
 
 int clear_on_exit = 0;
 
