@@ -147,7 +147,7 @@ ws2811_led_t getNeighbor(int i,int n){
     while(x>=WIDTH){x-=WIDTH;}
     while(y<0){y+=HEIGHT;}
     while(y>=HEIGHT){y-=HEIGHT;}
-    return grid[x+y*WIDTH];
+    return *grid[x+y*WIDTH];
 }
 
 void compCell(int i, ws2811_led_t c){
@@ -157,13 +157,13 @@ void compCell(int i, ws2811_led_t c){
             n++;
         }
     }
-    if((&grid[i]&c)>0){//Alive?
+    if((*grid[i]&c)>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
-            gridB[i] = &grid[i]&(~c);//Kill
+            *gridB[i] = *grid[i]&(~c);//Kill
         }
     }else{//Dead
         if(n==3){//Just right?
-           gridB[i] = &grid[i]|c;//Birth
+           *gridB[i] = *grid[i]|c;//Birth
         }
     }
 }
@@ -222,7 +222,7 @@ bool render(){
         if(y%2){
             j=(WIDTH-1-x)+y*WIDTH;
         }
-        ledstring.channel[0].leds[j]=gridB[i];
+        ledstring.channel[0].leds[j]=*grid[i];
     }
     if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
         fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
@@ -234,11 +234,11 @@ bool render(){
 void initRandomLife(){
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
         int r = rand()&15;
-        grid[i]=0;
+        *grid[i]=0;
         if(r<8){
-            if((r&4)>0){&grid[i]|=RED;}
-            if((r&2)>0){&grid[i]|=GREEN;}
-            if((r&1)>0){&grid[i]|=BLUE;}
+            if((r&4)>0){*grid[i]|=RED;}
+            if((r&2)>0){*grid[i]|=GREEN;}
+            if((r&1)>0){*grid[i]|=BLUE;}
         }
     }
 }
