@@ -288,9 +288,9 @@ int main(int argc, char **argv){
             
             swapped=!swapped;
             if(swapped){
-                grid=&gridA;
+                *grid=*gridA;
             }else{
-                grid=&gridB;
+                *grid=*gridB;
             }
 
             clock_gettime(CLOCK_REALTIME, &ts); 
