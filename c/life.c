@@ -24,14 +24,14 @@
 
 
 #define ARRAY_SIZE(stuff)       (sizeof(stuff) / sizeof(stuff[0]))
-#define RED 1
-#define YELLOW 2
-#define GREEN 3
-#define CYAN 4
-#define BLUE 5
-#define PURPLE 6
-#define WHITE 7
-#define BLACK 8
+#define nRED     1
+#define nYELLOW  2
+#define nGREEN   3
+#define nCYAN    4
+#define nBLUE    5
+#define nPURPLE  6
+#define nWHITE   7
+#define nBLACK   8
 
 // defaults for cmdline options
 #define TARGET_FREQ             WS2811_TARGET_FREQ
@@ -192,39 +192,39 @@ void preview(){
     for(int i=0;i<LED_COUNT;i++){
         int x = i%WIDTH;
         int y = i/WIDTH;
-        int color = RED;
+        int color = nRED;
         if(y%2){
             x=WIDTH-1-x;
         }
         switch(ledstring.channel[0].leds[i]){
             case 0x00FF0000:
-                color=RED;
+                color=nRED;
                 break;
             case 0x00FFFF00:
-                color=YELLOW;
+                color=nYELLOW;
                 break;
             case 0x0000FF00:
-                color=GREEN;
+                color=nGREEN;
                 break;
             case 0x0000FFFF:
-                color=CYAN;
+                color=nCYAN;
                 break;
             case 0x000000FF:
-                color=BLUE;
+                color=nBLUE;
                 break;
             case 0x00FF00FF:
-                color=PURPLE;
+                color=nPURPLE;
                 break;
             case 0x00FFFFFF:
-                color=WHITE;
+                color=nWHITE;
                 break;
             case 0x00000000:
             default:
-                color=BLACK;
+                color=nBLACK;
                 break;
         }
         attron(COLOR_PAIR(color));
-        mvaddch(y,x,"█");
+        mvaddch(y,x,'█');
         attroff(COLOR_PAIR(color));
     }
     refresh();
@@ -236,14 +236,14 @@ int main(int argc, char **argv){
     ws2811_return_t ret;
     initscr();
     start_color();
-    init_pair(RED,COLOR_RED,COLOR_BLACK);
-    init_pair(YELLOW,COLOR_YELLOW,COLOR_BLACK);
-    init_pair(GREEN,COLOR_GREEN,COLOR_BLACK);
-    init_pair(CYAN,COLOR_CYAN,COLOR_BLACK);
-    init_pair(BLUE,COLOR_BLUE,COLOR_BLACK);
-    init_pair(PURPLE,COLOR_PURPLE,COLOR_BLACK);
-    init_pair(WHITE,COLOR_WHITE,COLOR_BLACK);
-    init_pair(BLACK,COLOR_BLACK,COLOR_BLACK);
+    init_pair(nRED,COLOR_RED,COLOR_BLACK);
+    init_pair(nYELLOW,COLOR_YELLOW,COLOR_BLACK);
+    init_pair(nGREEN,COLOR_GREEN,COLOR_BLACK);
+    init_pair(nCYAN,COLOR_CYAN,COLOR_BLACK);
+    init_pair(nBLUE,COLOR_BLUE,COLOR_BLACK);
+    init_pair(nPURPLE,COLOR_MAGENTA,COLOR_BLACK);
+    init_pair(nWHITE,COLOR_WHITE,COLOR_BLACK);
+    init_pair(nBLACK,COLOR_BLACK,COLOR_BLACK);
     setup_handlers();
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
