@@ -54,10 +54,10 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-ws2811_led_t gridA[LED_COUNT];
+ws2811_led_t grid[LED_COUNT];
 ws2811_led_t gridB[LED_COUNT];
+ws2811_led_t gridC[LED_COUNT];
 
-ws2811_led_t *grid[LED_COUNT] = gridA;
 
 int clear_on_exit = 0;
 
@@ -242,7 +242,8 @@ void initRandomLife(){
         }
     }
 }
-bool swapped = false;
+
+
 int main(int argc, char **argv){
     ws2811_return_t ret;
     //initscr();
@@ -286,12 +287,9 @@ int main(int argc, char **argv){
             //preview();
             if(!render()){break;}
             
-            swapped!=swapped;
-            if(swapped){
-                *grid=*gridA;
-            }else{
-                *grid=*gridB;
-            }
+            *gridC=*grid;//Pointer swap hopefully, should be 500x faster than memory copy
+            *grid=*gridB;
+            *gridB=*gridC;
 
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t1 = ts.tv_nsec/1000+ts.tv_sec*1000000;
