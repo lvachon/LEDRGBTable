@@ -289,7 +289,6 @@ int main(int argc, char **argv){
             if(!allSame){
                 usleep(1000000);
                 initRandomLife();
-                break;
             }
             usleep(1000000 / 30);
         }
