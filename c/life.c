@@ -287,9 +287,9 @@ int main(int argc, char **argv){
             //preview();
             if(!render()){break;}
             
-            gridC=grid;//Pointer swap hopefully, should be 500x faster than memory copy
-            grid=gridB;
-            gridB=gridC;
+            *gridC=*grid;//Pointer swap hopefully, should be 500x faster than memory copy
+            *grid=*gridB;
+            *gridB=*gridC;
 
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t1 = ts.tv_nsec/1000+ts.tv_sec*1000000;
