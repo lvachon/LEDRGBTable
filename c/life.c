@@ -229,7 +229,17 @@ bool render(){
     return true;
 }
 
-
+void initRandomLife(){
+    for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
+        int r = rand()&15;
+        grid[i]=0;
+        if(r<8){
+            if((r&4)>0){grid[i]|=RED;}
+            if((r&2)>0){grid[i]|=GREEN;}
+            if((r&1)>0){grid[i]|=BLUE;}
+        }
+    }
+}
 
 
 int main(int argc, char **argv){
@@ -259,15 +269,7 @@ int main(int argc, char **argv){
        loops = atoi(argv[1]);
     }
 
-    for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
-        int r = rand()&15;
-        grid[i]=0;
-        if(r<8){
-            if((r&4)>0){grid[i]|=RED;}
-            if((r&2)>0){grid[i]|=GREEN;}
-            if((r&1)>0){grid[i]|=BLUE;}
-        }
-    }
+    
     preview();
     while(running && (loops==-1 || loops>0)){
         loops--;
@@ -279,8 +281,15 @@ int main(int argc, char **argv){
             }
             preview();
             if(!render()){break;}
+            bool allSame=true;
             for(int i=0;i<LED_COUNT;i++){
+                if(grid[i]!=gridB[i]){allSame=false;}
                 grid[i]=gridB[i];
+            }
+            if(!allSame){
+                usleep(1000000);
+                initRandomLife();
+                break;
             }
             usleep(1000000 / 30);
         }
