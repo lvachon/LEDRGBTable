@@ -285,7 +285,14 @@ int main(int argc, char **argv){
                 break;
             }
             for(int i=0;i<LED_COUNT;i++){
+                int y = i/WIDTH;
+                if(y%2){
+                    int x=i%WIDTH;
+                    x=WIDTH-1-x;
+                    i=y*WIDTH+x;    
+                }
                 grid[i]=ledstring.channel[0].leds[i];
+
             }
             usleep(1000000 / 1);
         }
