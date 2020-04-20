@@ -215,7 +215,7 @@ void preview(){
 }
 
 
-void render(){
+bool render(){
     ws2811_return_t ret;
     for(int i=0;i<LED_COUNT;i++){
         int x = i%WIDTH;
@@ -228,8 +228,9 @@ void render(){
     }
     if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
         fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
-        break;
+        return false;
     }
+    return true;
 }
 
 
@@ -282,7 +283,7 @@ int main(int argc, char **argv){
                 //compCell(i, BLUE);
             }
             preview();
-            render();
+            if(!render()){break;}
             for(int i=0;i<LED_COUNT;i++){
                 grid[i]=gridB[i];
             }
