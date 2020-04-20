@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <getopt.h>
 #include <time.h>
+#include <sys/resource.h>
 
 #include <ncurses.h>
 
@@ -269,13 +270,13 @@ int main(int argc, char **argv){
        loops = atoi(argv[1]);
     }
     initRandomLife();
-    struct timeval tv;
+    struct timespec ts;
     
     while(running && (loops==-1 || loops>0)){
         if(loops>0){loops--;}
         for(int frame=0;frame<1800 && running;frame++){
-            gettimeofday(&tv,NULL);
-            uint64_t t0 = tv.tv_usec+tv.tv_sec*1000000;
+            clock_gettime(CLOCK_REALTIME, &start); 
+            uint64_t t0 = ts.tv_nsec/1000+tv.tv_sec*1000000;
             for(int i=0;i<LED_COUNT;i++){
                 compCell(i, RED);
                 compCell(i, GREEN);
@@ -293,8 +294,8 @@ int main(int argc, char **argv){
                 initRandomLife();
                 frame=0;
             }
-            gettimeofday(&tv,NULL);
-            uint64_t t1 = tv.tv_usec+tv.tv_sec*1000000;
+            clock_gettime(CLOCK_REALTIME, &start); 
+            uint64_t t1 = ts.tv_nsec/1000+tv.tv_sec*1000000;
             usleep(1000000 / 30 - (t1-t0));
         }
     }
