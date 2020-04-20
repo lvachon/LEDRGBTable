@@ -157,13 +157,13 @@ void compCell(int i, ws2811_led_t c){
             n++;
         }
     }
-    if((&grid[i]&c)>0){//Alive?
+    if((grid[i]&c)>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
-            gridB[i] = &grid[i]&(~c);//Kill
+            gridB[i] = grid[i]&(~c);//Kill
         }
     }else{//Dead
         if(n==3){//Just right?
-           gridB[i] = &grid[i]|c;//Birth
+           gridB[i] = grid[i]|c;//Birth
         }
     }
 }
@@ -236,9 +236,9 @@ void initRandomLife(){
         int r = rand()&15;
         grid[i]=0;
         if(r<8){
-            if((r&4)>0){&grid[i]|=RED;}
-            if((r&2)>0){&grid[i]|=GREEN;}
-            if((r&1)>0){&grid[i]|=BLUE;}
+            if((r&4)>0){grid[i]|=RED;}
+            if((r&2)>0){grid[i]|=GREEN;}
+            if((r&1)>0){grid[i]|=BLUE;}
         }
     }
 }
