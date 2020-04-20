@@ -179,7 +179,7 @@ void preview(){
         int x = i%WIDTH;
         int y = i/WIDTH;
         int color = nRED;
-        switch(*gridB[i]){
+        switch(gridB[i]){
             case 0x00FF0000:
                 color=nRED;
                 break;
