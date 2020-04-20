@@ -268,7 +268,7 @@ int main(int argc, char **argv){
     if(argc>1){
        loops = atoi(argv[1]);
     }
-
+    initRandomLife();
     
     preview();
     while(running && (loops==-1 || loops>0)){
