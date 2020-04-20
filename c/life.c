@@ -286,7 +286,7 @@ int main(int argc, char **argv){
             //preview();
             if(!render()){break;}
             
-            swapped!=swapped;
+            swapped=!swapped;
             if(swapped){
                 *grid=*gridA;
             }else{
