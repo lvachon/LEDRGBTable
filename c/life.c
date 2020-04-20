@@ -147,7 +147,7 @@ ws2811_led_t getNeighbor(int i,int n){
     while(y>=HEIGHT){y-=HEIGHT;}
     return grid[x+y*WIDTH];
 }
-char ns[LED_COUNT];
+
 void compCell(int i, ws2811_led_t c){
     int n=0;
     for(int j=0;j<8;j++){
@@ -155,7 +155,6 @@ void compCell(int i, ws2811_led_t c){
             n++;
         }
     }
-    ns[i]=(char)(n+48);
     if((grid[i]&c)>0){//Alive?
         if(!(n==2 || n==3)){//Too lonely/crouded?
             gridB[i] = grid[i]&(~c);//Kill
@@ -205,7 +204,7 @@ void preview(){
                 break;
         }
         attron(COLOR_PAIR(color));
-        mvaddch(y,x,ns[i]);
+        mvaddch(y,x,'*');
         attroff(COLOR_PAIR(color));
     }
     refresh();
@@ -244,7 +243,7 @@ int main(int argc, char **argv){
     init_pair(nBLUE,COLOR_BLUE,COLOR_BLACK);
     init_pair(nPURPLE,COLOR_MAGENTA,COLOR_BLACK);
     init_pair(nWHITE,COLOR_WHITE,COLOR_BLACK);
-    init_pair(nBLACK,COLOR_BLACK,COLOR_RED);
+    init_pair(nBLACK,COLOR_BLACK,COLOR_BLACK);
     setup_handlers();
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
@@ -265,28 +264,25 @@ int main(int argc, char **argv){
         grid[i]=0;
         if(r<8){
             if((r&4)>0){grid[i]|=RED;}
-            //if((r&2)>0){grid[i]|=GREEN;}
-            //if((r&1)>0){grid[i]|=BLUE;}
+            if((r&2)>0){grid[i]|=GREEN;}
+            if((r&1)>0){grid[i]|=BLUE;}
         }
     }
     preview();
-    usleep(1000000);
-
-
     while(running && (loops==-1 || loops>0)){
         loops--;
         for(int frame=0;frame<1800 && running;frame++){
             for(int i=0;i<LED_COUNT;i++){
                 compCell(i, RED);
-                //compCell(i, GREEN);
-                //compCell(i, BLUE);
+                compCell(i, GREEN);
+                compCell(i, BLUE);
             }
             preview();
             if(!render()){break;}
             for(int i=0;i<LED_COUNT;i++){
                 grid[i]=gridB[i];
             }
-            usleep(1000000 / 1);
+            usleep(1000000 / 30);
         }
     }
 
