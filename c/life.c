@@ -177,10 +177,7 @@ void preview(){
         int x = i%WIDTH;
         int y = i/WIDTH;
         int color = nRED;
-        if(y%2){
-            x=WIDTH-1-x;
-        }
-        switch(ledstring.channel[0].leds[i]){
+        switch(gridB[i]){
             case 0x00FF0000:
                 color=nRED;
                 break;
@@ -274,6 +271,8 @@ int main(int argc, char **argv){
     }
     preview();
     usleep(1000000);
+
+
     while(running && (loops==-1 || loops>0)){
         loops--;
         for(int frame=0;frame<1800 && running;frame++){
