@@ -244,7 +244,7 @@ int main(int argc, char **argv){
     init_pair(nBLUE,COLOR_BLUE,COLOR_BLACK);
     init_pair(nPURPLE,COLOR_MAGENTA,COLOR_BLACK);
     init_pair(nWHITE,COLOR_WHITE,COLOR_BLACK);
-    init_pair(nBLACK,COLOR_BLACK,COLOR_BLACK);
+    init_pair(nBLACK,COLOR_BLACK,COLOR_RED);
     setup_handlers();
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
