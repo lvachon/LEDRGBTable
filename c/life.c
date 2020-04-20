@@ -262,12 +262,14 @@ int main(int argc, char **argv){
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to random;
         int r = rand()&15;
         ledstring.channel[0].leds[i]=0;
-        if((r&4)>0){ledstring.channel[0].leds[i]|=RED;}
-        if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
-        if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
+        if(r<8){
+            if((r&4)>0){ledstring.channel[0].leds[i]|=RED;}
+            if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
+            if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
+        }
     }
     preview();
-    sleep(1000000 * 2);
+    sleep(1000000);
     while(running && (loops==-1 || loops>0)){
         loops--;
         for(int frame=0;frame<1800 && running;frame++){
@@ -276,12 +278,11 @@ int main(int argc, char **argv){
                 compCell(i, GREEN);
                 compCell(i, BLUE);
             }
-
+            preview();
             if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
                 fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
                 break;
             }
-            preview();
             for(int i=0;i<LED_COUNT;i++){
                 grid[i]=ledstring.channel[0].leds[i];
             }
