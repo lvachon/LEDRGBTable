@@ -269,7 +269,7 @@ int main(int argc, char **argv){
         }
     }
     preview();
-    sleep(1000000);
+    usleep(1000000);
     while(running && (loops==-1 || loops>0)){
         loops--;
         for(int frame=0;frame<1800 && running;frame++){
