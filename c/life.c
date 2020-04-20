@@ -216,19 +216,20 @@ void preview(){
 
 
 void render(){
-for(int i=0;i<LED_COUNT;i++){
-    int x = i%WIDTH;
-    int y = i/WIDTH;
-    int j = i;
-    if(y%2){
-        int j=(WIDTH-1-x)+y*WIDTH;
+    ws2811_return_t ret;
+    for(int i=0;i<LED_COUNT;i++){
+        int x = i%WIDTH;
+        int y = i/WIDTH;
+        int j = i;
+        if(y%2){
+            j=(WIDTH-1-x)+y*WIDTH;
+        }
+        ledstring.channel[0].leds[j]=gridB[i];
     }
-    ledstring.channel[0].leds[j]=gridB[i];
     if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS){//Render that framebuffer
         fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         break;
     }
-
 }
 
 
