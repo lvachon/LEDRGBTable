@@ -286,9 +286,10 @@ int main(int argc, char **argv){
                 if(grid[i]!=gridB[i]){allSame=false;}
                 grid[i]=gridB[i];
             }
-            if(!allSame){
+            if(allSame){
                 usleep(1000000);
                 initRandomLife();
+                frame=0;
             }
             usleep(1000000 / 30);
         }
