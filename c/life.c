@@ -264,8 +264,8 @@ int main(int argc, char **argv){
         ledstring.channel[0].leds[i]=0;
         if(r<8){
             if((r&4)>0){ledstring.channel[0].leds[i]|=RED;}
-            if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
-            if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
+            //if((r&2)>0){ledstring.channel[0].leds[i]|=GREEN;}
+            //if((r&1)>0){ledstring.channel[0].leds[i]|=BLUE;}
         }
     }
     preview();
