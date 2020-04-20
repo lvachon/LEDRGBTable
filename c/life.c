@@ -12,6 +12,7 @@
 #include <getopt.h>
 #include <time.h>
 
+#include <ncurses.h>
 
 #include "clk.h"
 #include "gpio.h"
@@ -23,6 +24,14 @@
 
 
 #define ARRAY_SIZE(stuff)       (sizeof(stuff) / sizeof(stuff[0]))
+#define RED 1
+#define YELLOW 2
+#define GREEN 3
+#define CYAN 4
+#define BLUE 5
+#define PURPLE 6
+#define WHITE 7
+#define BLACK 8
 
 // defaults for cmdline options
 #define TARGET_FREQ             WS2811_TARGET_FREQ
@@ -179,9 +188,62 @@ ws2811_led_t GREEN = 0x0000FF00;
 ws2811_led_t BLUE = 0x000000FF;
 
 
+void preview(){
+    for(int i=0;i<LED_COUNT;i++){
+        int x = i%WIDTH;
+        int y = i/WIDTH;
+        int color = RED;
+        if(y%2){
+            x=WIDTH-1-x;
+        }
+        switch(ledstring.channel[0].leds[i]){
+            case 0x00FF0000:
+                color=RED;
+                break;
+            case 0x00FFFF00:
+                color=YELLOW;
+                break;
+            case 0x0000FF00:
+                color=GREEN;
+                break;
+            case 0x0000FFFF:
+                color=CYAN;
+                break;
+            case 0x000000FF:
+                color=BLUE;
+                break;
+            case 0x00FF00FF:
+                color=PURPLE;
+                break;
+            case 0x00FFFFFF:
+                color=WHITE;
+                break;
+            case 0x00000000:
+            default:
+                color=BLACK;
+                break;
+        }
+        attron(COLOR_PAIR(color));
+        mvaddch(y,x,"█");
+        attroff(COLOR_PAIR(color));
+    }
+    refresh();
+}
+
+
+
 int main(int argc, char **argv){
     ws2811_return_t ret;
-    
+    initscr();
+    start_color();
+    init_pair(RED,COLOR_RED,COLOR_BLACK);
+    init_pair(YELLOW,COLOR_YELLOW,COLOR_BLACK);
+    init_pair(GREEN,COLOR_GREEN,COLOR_BLACK);
+    init_pair(CYAN,COLOR_CYAN,COLOR_BLACK);
+    init_pair(BLUE,COLOR_BLUE,COLOR_BLACK);
+    init_pair(PURPLE,COLOR_PURPLE,COLOR_BLACK);
+    init_pair(WHITE,COLOR_WHITE,COLOR_BLACK);
+    init_pair(BLACK,COLOR_BLACK,COLOR_BLACK);
     setup_handlers();
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
@@ -218,6 +280,7 @@ int main(int argc, char **argv){
                 fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
                 break;
             }
+            preview();
             for(int i=0;i<LED_COUNT;i++){
                 grid[i]=ledstring.channel[0].leds[i];
             }
@@ -227,7 +290,8 @@ int main(int argc, char **argv){
 
     ws2811_fini(&ledstring);
 
-    printf ("\n");
+    //printf ("\n");
+    endwin();
     return ret;
 }
 
