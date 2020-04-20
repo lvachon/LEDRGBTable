@@ -224,7 +224,7 @@ void preview(){
                 break;
         }
         attron(COLOR_PAIR(color));
-        mvaddch(y,x,'█');
+        mvaddch(y,x,'*');
         attroff(COLOR_PAIR(color));
     }
     refresh();
