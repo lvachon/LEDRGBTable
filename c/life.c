@@ -56,6 +56,7 @@ int led_count = LED_COUNT;
 
 ws2811_led_t grid[LED_COUNT];
 ws2811_led_t gridB[LED_COUNT];
+ws2811_led_t gridC[LED_COUNT];
 
 
 int clear_on_exit = 0;
@@ -245,8 +246,8 @@ void initRandomLife(){
 
 int main(int argc, char **argv){
     ws2811_return_t ret;
-    initscr();
-    start_color();
+    //initscr();
+    //start_color();
     init_pair(nRED,COLOR_RED,COLOR_BLACK);
     init_pair(nYELLOW,COLOR_YELLOW,COLOR_BLACK);
     init_pair(nGREEN,COLOR_GREEN,COLOR_BLACK);
@@ -274,6 +275,7 @@ int main(int argc, char **argv){
     
     while(running && (loops==-1 || loops>0)){
         if(loops>0){loops--;}
+        initRandomLife();
         for(int frame=0;frame<1800 && running;frame++){
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t0 = ts.tv_nsec/1000+ts.tv_sec*1000000;
@@ -284,16 +286,11 @@ int main(int argc, char **argv){
             }
             //preview();
             if(!render()){break;}
-            bool allSame=true;
-            for(int i=0;i<LED_COUNT;i++){
-                if(grid[i]!=gridB[i]){allSame=false;}
-                grid[i]=gridB[i];
-            }
-            if(allSame){
-                usleep(1000000);
-                initRandomLife();
-                frame=0;
-            }
+            
+            gridC=grid;//Pointer swap hopefully, should be 500x faster than memory copy
+            grid=gridB;
+            gridB=gridC;
+
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t1 = ts.tv_nsec/1000+ts.tv_sec*1000000;
             usleep(1000000 / 30 - (t1-t0));
