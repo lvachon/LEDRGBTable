@@ -93,7 +93,7 @@ if(isset($_GET['rand'])){
 	</body>
 	<script>
 		function getCurcmd(){
-			fetch("curcmd").then((response) => {
+			fetch(`curcmd?${Math.random()}`).then((response) => {
 				return response.text();
 			}).then((data) => {
 				curcmd.innerHTML=data;
