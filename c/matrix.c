@@ -138,7 +138,7 @@ int main(int argc, char **argv){
 
     while(running && (loops==-1 || loops>0)){
         if(loops>0){loops--;}
-        for(int frame=0;frame<1800 && running;frame++){
+        for(int frame=0;frame<900 && running;frame++){
     	    for(int i=0;i<LED_COUNT;i++){//Fade
                 unsigned char r = (ledstring.channel[0].leds[i] & 0x000000FF);
                 unsigned char g = (ledstring.channel[0].leds[i] & 0x0000FF00)>>8;
