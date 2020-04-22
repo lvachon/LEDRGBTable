@@ -1,39 +1,47 @@
 <?php
+$brightness = intval($_GET['brightness']);
 if(isset($_GET['raw'])){
 	$file = "../raws/{$_GET['raw']}.raw";
         $secs = 0.03 * filesize($file)/(31*16*3);
         $loops = max(1,floor(30/$secs));
 	$fname = escapeshellarg ( "../raws/".$_GET['raw'].".raw" );
-	$cmd = "../c/rawPlayer {$fname} {$loops}";
+	$cmd = "../c/rawPlayer {$fname} {$loops} {$brightness}";
 	file_put_contents("webcmd",$cmd);
+	die();
 }
 if(isset($_GET['rps'])){
-	$cmd = "../c/rps 1";
+	$cmd = "../c/rps 1 {$brightness}";
 	file_put_contents("webcmd",$cmd);
+	die();
 }
 if(isset($_GET['black'])){
 	$cmd = "../python/black.py";
 	file_put_contents("webcmd",$cmd);
+	die();
 }
 if(isset($_GET['matrix'])){
-	$cmd = "../c/matrix 1";
+	$cmd = "../c/matrix 1 {$brightness}";
 	file_put_contents("webcmd",$cmd);
+	die();
 }
 if(isset($_GET['clock'])){
-	$cmd = "cd ../c/;./clock 1";
+	$cmd = "cd ../c/;./clock 1 {$brightness}";
 	file_put_contents("webcmd",$cmd);
+	die();
 }
 if(isset($_GET['life'])){
-	$cmd = "cd ../c/;./life 1";
+	$cmd = "cd ../c/;./life 1 {$brightness}";
 	file_put_contents("webcmd",$cmd);
+	die();
 }
 if(isset($_GET['rand'])){
 	$a = glob("../raws/*.raw");
 	$file = $a[rand(0,floor(count($a)-1))];
 	$secs = 0.03 * filesize($file)/(31*16*3);
 	$loops = max(1,floor(30/$secs));
-	$cmd = "rand";
+	$cmd = "rand {$brightness}";
 	file_put_contents("webcmd",$cmd);
+	die();
 }?>
 <html>
 	<head>
@@ -43,13 +51,30 @@ if(isset($_GET['rand'])){
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
 			.status {font-size:1cm;}
 		</style>
+		<script>
+			function playVid(vid){
+				fetch(`index.php?raw=${vid}&brightness=${brightness.value}`).then((response) => {
+					return response.text();
+				}).then((data) => {
+					nextcmd.innerHTML=vid;
+				});
+			}
+			function runCmd(cmd){
+				fetch(`index.php?${cmd}&brightness=${brightness.value}`).then((response) => {
+					return response.text();
+				}).then((data) => {
+					nextcmd.innerHTML=cmd;
+				});
+			}
+		</script>
 	</head>
 	<body>
 		<h1>LEDRGBTable</h1>
 		<div class='status'>
-			Next command: <?php echo file_get_contents("webcmd");?><br/>
+			Next command: <span id='nextcmd'><?php echo file_get_contents("webcmd");?></span><br/>
 			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
 		</div>
+		<div><input value='255' type='numeric' id='brightness' maxval='255' minval='0'/></div>
 		<div>	
 			<h2>Vids</h2>
 			<?php 
@@ -76,19 +101,19 @@ if(isset($_GET['rand'])){
 					imagepng($im);
 					$img = ob_get_clean();
 					$bn = basename($file,".raw");
-					echo "<a href='?raw={$bn}'><img class='vid' src='data:image/png;base64, ".base64_encode($img)."'/></a>";
+					echo "<img onclick='playVid(\"{$bin}\");' class='vid' src='data:image/png;base64, ".base64_encode($img)."'/>";
 				}
 
 			?>
-			<a href='?rand=1'>[ ? ]</a>
+			<a href='javascript:runCmd("rand=1");'>[ ? ]</a>
 		</div>
 		<div>
 			<h2>Progs</h2>
-			<a href='?rps=1'>RPS</a><br/>
-			<a href='?life=1'>Life</a><br/>
-			<a href='?matrix=1'>Matrix</a><br/>
-			<a href='?clock=1'>Clock</a><br/>
-			<a href='?black=1'>Off</a>
+			<a href='javascript:runCmd("rps=1")'>RPS</a><br/>
+			<a href='javascript:runCmd("life=1")'>Life</a><br/>
+			<a href='javascript:runCmd("matrix=1")'>Matrix</a><br/>
+			<a href='javascript:runCmd("clock=1")'>Clock</a><br/>
+			<a href='javascript:runCmd("black=1")'>Off</a>
 		</div>
 	</body>
 	<script>

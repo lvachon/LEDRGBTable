@@ -168,6 +168,15 @@ int c2i(char c){
     return (int)(c)-48;
 }
 
+void parseArgs(int argc, char *argv[]){
+    if(argc>1){
+        loops = atoi(argv[1]);
+    }
+    if(argc>2){
+        unsigned char brightness = atoi(argv[2]);
+        ledstring.channel[0].brightness=brightness;
+    }
+}
 
 int main(int argc, char **argv){
     ws2811_return_t ret;
@@ -184,17 +193,14 @@ int main(int argc, char **argv){
 
     srand(time(NULL));
 
-    int loops = -1;
-    if(argc>1){
-       loops = atoi(argv[1]);
-    }
+    parseArgs(argc, argv);
 
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to black;
         ledstring.channel[0].leds[i]=0;
     }
 
     while(running && (loops==-1 || loops>0)){
-        loops--;
+        if(loops>0){loops--;}
         for(int frame=0;frame<1800 && running;frame++){
             time (&rawtime);
             timeinfo = localtime (&rawtime);

@@ -174,10 +174,23 @@ void compCell(int i){
     setLED(i,out);    
 }
 
+int loops=-1;
+
+void parseArgs(int argc, char *argv[]){
+    if(argc>1){
+        loops = atoi(argv[1]);
+    }
+    if(argc>2){
+        unsigned char brightness = atoi(argv[2]);
+        ledstring.channel[0].brightness=brightness;
+    }
+}
+
 int main(int argc, char **argv){
     ws2811_return_t ret;
     
     setup_handlers();
+    parseArgs();
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
     {
@@ -187,15 +200,10 @@ int main(int argc, char **argv){
 
     srand(time(NULL));
 
-    int loops = -1;
-    if(argc>1){
-	   loops = atoi(argv[1]);
-    }
-
     while(running && (loops==-1 || loops>0)){
-	if(loops>0){
-	    loops--;
-	}
+    	if(loops>0){
+    	    loops--;
+    	}
         for(int i=0;i<LED_COUNT;i++){//Init LEDS to a random state
             unsigned int rnd = rand()&15;
             if(rnd==0){ledstring.channel[0].leds[i]=ROCK;continue;}
@@ -203,7 +211,7 @@ int main(int argc, char **argv){
             if(rnd==2){ledstring.channel[0].leds[i]=SCISSORS;continue;}
             ledstring.channel[0].leds[i]=NONE;
         }
-        for(int frame=0;frame<1800 && running;frame++){
+        for(int frame=0;frame<900 && running;frame++){
     	    for(int i=0;i<LED_COUNT;i++){//Copy framebuffer back to grid for next step
                     grid[i]=ledstring.channel[0].leds[i];
             }

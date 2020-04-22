@@ -42,7 +42,8 @@ int led_count = LED_COUNT;
 int clear_on_exit = 0;
 int frame = 0;
 int frames = 0;
-int loops = 1;
+int loops = -1;
+
 unsigned char* anim;
 ws2811_t ledstring =
 {
@@ -100,16 +101,25 @@ unsigned char* readFileBytes(const char *name)
     return ret;  
 }   
 
+void parseArgs(int argc, char *argv[]){
+    if(argc>2){
+        loops = atoi(argv[2]);
+    }
+    if(argc>3){
+        unsigned char brightness = atoi(argv[3]);
+        ledstring.channel[0].brightness=brightness;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     ws2811_return_t ret;
     if(argc>1){
     	anim = readFileBytes(argv[1]);
     }
-    if(argc>2){
-    	loops = atoi(argv[2]);
-    }
+    
     setup_handlers();
+    parseArgs(argc, argv);
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
     {
@@ -118,7 +128,7 @@ int main(int argc, char *argv[])
     }
 
     
-    for(int loop=0;loop<loops && running;loop++){
+    while((loops>0||loops==-1) && running){
     	for(int frame=1;frame<frames && running;frame++){
             for(int i=0;i<LED_COUNT && running;i++){
 	        	ledstring.channel[0].leds[i]=anim[3*(frame*LED_COUNT+i)+1-WIDTH*3]<<16|anim[3*(frame*LED_COUNT+i)+0-WIDTH*3]<<8|anim[3*(frame*LED_COUNT+i)+2-WIDTH*3];
@@ -130,6 +140,7 @@ int main(int argc, char *argv[])
 	        }
 	        usleep(1000000 / 30);
 	    }
+        if(loops>0){loops--;}
 	}
     
 

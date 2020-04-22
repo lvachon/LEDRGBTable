@@ -51,14 +51,14 @@ ws2811_slib = tools_env.SharedLibrary('libws2811', lib_srcs)
 
 # Test Program
 srcs = Split('''
-    life.c
+    matrix.c
 ''')
 
 objs = []
 for src in srcs:
    objs.append(tools_env.Object(src))
 
-test = tools_env.Program('life', objs + tools_env['LIBS'])
+test = tools_env.Program('matrix', objs + tools_env['LIBS'])
 
 Default([test, ws2811_lib])
 

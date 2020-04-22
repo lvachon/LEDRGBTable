@@ -242,6 +242,16 @@ void initRandomLife(){
     }
 }
 
+void parseArgs(int argc, char *argv[]){
+    if(argc>1){
+        loops = atoi(argv[1]);
+    }
+    if(argc>2){
+        unsigned char brightness = atoi(argv[2]);
+        ledstring.channel[0].brightness=brightness;
+    }
+}
+
 
 int main(int argc, char **argv){
     ws2811_return_t ret;
@@ -265,17 +275,15 @@ int main(int argc, char **argv){
 
     srand(time(NULL));
 
-    int loops = -1;
-    if(argc>1){
-       loops = atoi(argv[1]);
-    }
+    parseArgs(argc, argv);
+
     initRandomLife();
     struct timespec ts;
     
     while(running && (loops==-1 || loops>0)){
         if(loops>0){loops--;}
         initRandomLife();
-        for(int frame=0;frame<1800 && running;frame++){
+        for(int frame=0;frame<900 && running;frame++){
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t0 = ts.tv_nsec/1000+ts.tv_sec*1000000;
             for(int i=0;i<LED_COUNT;i++){
@@ -291,9 +299,7 @@ int main(int argc, char **argv){
                 grid[i]=gridB[i];
             }
             if(allSame){
-                usleep(1000000);
-                initRandomLife();
-                frame=0;
+                break;
             }
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t1 = ts.tv_nsec/1000+ts.tv_sec*1000000;
@@ -304,7 +310,7 @@ int main(int argc, char **argv){
     ws2811_fini(&ledstring);
 
     //printf ("\n");
-    endwin();
+    //endwin();
     return ret;
 }
 
