@@ -101,7 +101,7 @@ if(isset($_GET['rand'])){
 					imagepng($im);
 					$img = ob_get_clean();
 					$bn = basename($file,".raw");
-					echo "<img onclick='playVid(\"{$bin}\");' class='vid' src='data:image/png;base64, ".base64_encode($img)."'/>";
+					echo "<img onclick='playVid(\"{$bn}\");' class='vid' src='data:image/png;base64, ".base64_encode($img)."'/>";
 				}
 
 			?>

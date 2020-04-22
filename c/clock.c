@@ -183,6 +183,7 @@ int main(int argc, char **argv){
     ws2811_return_t ret;
     
     setup_handlers();
+    parseArgs(argc, argv);
 
     nums = readFileBytes("7seg.raw");
 
@@ -194,7 +195,6 @@ int main(int argc, char **argv){
 
     srand(time(NULL));
 
-    parseArgs(argc, argv);
 
     for(int i=0;i<LED_COUNT;i++){//Init LEDS to black;
         ledstring.channel[0].leds[i]=0;
