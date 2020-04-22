@@ -192,7 +192,7 @@ int main(int argc, char **argv){
     ws2811_return_t ret;
     
     setup_handlers();
-    parseArgs();
+    parseArgs(argc, argv);
 
     if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
     {
