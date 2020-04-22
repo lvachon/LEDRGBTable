@@ -59,7 +59,7 @@ ws2811_led_t gridB[LED_COUNT];
 
 
 int clear_on_exit = 0;
-
+int loops=-1;
 
 ws2811_t ledstring =
 {

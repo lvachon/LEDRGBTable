@@ -44,6 +44,8 @@ int led_count = LED_COUNT;
 
 int clear_on_exit = 0;
 
+int loops=-1;
+
 unsigned char* anim;
 ws2811_t ledstring =
 {
