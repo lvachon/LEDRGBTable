@@ -202,7 +202,7 @@ int main(int argc, char **argv){
 
     while(running && (loops==-1 || loops>0)){
         if(loops>0){loops--;}
-        for(int frame=0;frame<1800 && running;frame++){
+        for(int frame=0;frame<900 && running;frame++){
             time (&rawtime);
             timeinfo = localtime (&rawtime);
     	    strftime(clockString,13,"%m%d%y%H%M%S",timeinfo);
