@@ -74,7 +74,7 @@ if(isset($_GET['rand'])){
 			Next command: <span id='nextcmd'><?php echo file_get_contents("webcmd");?></span><br/>
 			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
 		</div>
-		<div><input value='255' type='numeric' id='brightness' maxval='255' minval='0'/></div>
+		<div><input value='127' type='range' step='1' id='brightness' min='0' max='255'/></div>
 		<div>	
 			<h2>Vids</h2>
 			<?php 
