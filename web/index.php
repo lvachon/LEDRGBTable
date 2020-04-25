@@ -59,6 +59,7 @@ if(isset($_GET['rand'])){
 			.progbox {height: 20%;}
 			button {background:#404040;color:#AAAAAA;width:5cm;height:2.5cm;font-size:1cm;margin-bottom:0.1cm;}
 			h2,h1 {margin:0.4cm;}
+			.invert {color:#FFFFFF;mix-blend-mode:difference;}
 		</style>
 		<script>
 			function playVid(vid){
@@ -113,7 +114,7 @@ if(isset($_GET['rand'])){
 							fclose($f);
 							imagepng($im,"../raws/png/{$bn}.png");
 						}
-						echo "<div style='background: center / contain no-repeat url(\"rawpng/{$bn}.png\")' onclick='playVid(\"{$bn}\");' class='vid' >".substr($bn,0,8)."</div>";
+						echo "<div style='background: center / contain no-repeat url(\"rawpng/{$bn}.png\")' onclick='playVid(\"{$bn}\");' class='vid' ><span class='invert'>".substr($bn,0,8)."</span></div>";
 					}
 
 				?>
