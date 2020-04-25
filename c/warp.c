@@ -47,8 +47,8 @@
 #define LED_COUNT               (WIDTH * HEIGHT)
 
 #define SLOW                    256
-#define NUM_STARS               32
-#define WARP_FACTOR             1.5
+#define NUM_STARS               16
+#define WARP_FACTOR             1.1
 
 int width = WIDTH;
 int height = HEIGHT;
