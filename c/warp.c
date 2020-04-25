@@ -57,7 +57,7 @@ int led_count = LED_COUNT;
 struct Star {
     float x;
     float y;
-    ws2811_led_t color;
+    ws2811_led_t c;
 };
 
 struct Star stars[NUM_STARS];
@@ -213,7 +213,7 @@ int main(int argc, char **argv){
 
     
     struct timespec ts;
-    for(int i=0;i<NUM_STARS){
+    for(int i=0;i<NUM_STARS;i++){
         stars[i].x=WIDTH*(rand()/RAND_MAX-0.5);
         stars[i].y=HEIGHT*(rand()/RAND_MAX-0.5);
         stars[i].c=hue2rgb(rand()&0xFF);
