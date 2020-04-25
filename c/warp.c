@@ -54,13 +54,13 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-struct star {
+struct Star {
     float x;
     float y;
     ws2811_led_t color;
-}
+};
 
-struct star stars[NUM_STARS];
+struct Star stars[NUM_STARS];
 
 ws2811_led_t gridB[LED_COUNT];
 
