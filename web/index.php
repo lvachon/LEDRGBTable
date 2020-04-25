@@ -51,13 +51,12 @@ if(isset($_GET['rand'])){
 <html>
 	<head>
 		<style>
-			.vid {margin:2px;border:solid 1px #888888;height:2.5cm;}
+			.vid {margin:0.1cm;border:solid 1px #888888;height:2.5cm;}
 			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;font-size:1cm;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
 			.status {font-size:0.75cm;}
-			.oflow {width:95%;height:40%;overflow-y:auto;}
-			.progbox button {width:5cm;height:2.5cm;}
-			button {background:#404040;color:#AAAAAA;}
+			.oflow {width:100%;height:40%;overflow-y:auto;text-align:center;}
+			button {background:#404040;color:#AAAAAA;width:5cm;height:2.5cm;font-size:1cm;margin-bottom:0.1cm;}
 		</style>
 		<script>
 			function playVid(vid){
@@ -119,7 +118,7 @@ if(isset($_GET['rand'])){
 					}
 
 				?>
-				<button onclick='runCmd("rand=1");' style='width:5cm;height:2.5cm;font-size:2cm;'>?</button>
+				<button onclick='runCmd("rand=1");' style='font-size:2cm;'>?</button>
 			</div>
 		</div>
 		<div>
@@ -129,8 +128,8 @@ if(isset($_GET['rand'])){
 				<button onclick='runCmd("warp=1")'>Warp</button>
 				<button onclick='runCmd("life=1")'>Life</button>
 				<button onclick='runCmd("matrix=1")'>Matrix</button>
-				<button onclick='runCmd("clock=1")'>Clock'</button>
-				<button onclick='runCmd("black=1")'>Off'</button>
+				<button onclick='runCmd("clock=1")'>Clock</button>
+				<button onclick='runCmd("black=1")'>Off</button>
 			</div>
 		</div>
 	</body>
