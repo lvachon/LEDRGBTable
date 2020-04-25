@@ -238,8 +238,8 @@ int main(int argc, char **argv){
     
     struct timespec ts;
     for(int i=0;i<NUM_STARS;i++){
-        stars[i].x=WIDTH*(rand()/RAND_MAX-0.5);
-        stars[i].y=HEIGHT*(rand()/RAND_MAX-0.5);
+        stars[i].x=WIDTH*((float)(rand())/(float)(RAND_MAX)-0.5);
+        stars[i].y=HEIGHT*((float)(rand())/(float)(RAND_MAX)-0.5);
         stars[i].c=hue2rgb(rand()&0xFF);
     }
     
@@ -274,8 +274,8 @@ int main(int argc, char **argv){
                 int x = (int)(stars[i].x+WIDTH/2.0);
                 int y = (int)(stars[i].y+HEIGHT/2.0);
                 if(x<0 || x>=WIDTH || y<0 || y>=HEIGHT){
-                    stars[i].x=0.1*rand()/RAND_MAX-0.05;
-                    stars[i].y=0.1*rand()/RAND_MAX-0.05;
+                    stars[i].x=0.1*(float)(rand())/(float)(RAND_MAX)-0.05;
+                    stars[i].y=0.1*(float)(rand())/(float)(RAND_MAX)-0.05;
                     stars[i].c=hue2rgb(rand()&0xFF);
                     x=WIDTH/2;
                     y=HEIGHT/2;
