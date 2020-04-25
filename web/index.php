@@ -57,6 +57,7 @@ if(isset($_GET['rand'])){
 			.status {font-size:0.75cm;}
 			.oflow {width:100%;height:40%;overflow-y:auto;text-align:center;}
 			.progbox {height: 20%;}
+			.vidbox {height: 45%;}
 			button {background:#404040;color:#AAAAAA;width:5cm;height:2.5cm;font-size:1cm;margin-bottom:0.1cm;}
 			h2,h1 {margin:0.4cm;}
 			.invert {color:#FFFFFF;mix-blend-mode:difference;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
