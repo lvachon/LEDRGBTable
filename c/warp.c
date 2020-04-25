@@ -49,7 +49,7 @@
 #define SLOW                    256
 #define NUM_STARS               128
 #define WARP_FACTOR             1.05
-#define MIN_RAD_SQUARED         16
+#define MIN_RAD_SQUARED         1
 
 int width = WIDTH;
 int height = HEIGHT;
