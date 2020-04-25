@@ -306,7 +306,7 @@ int main(int argc, char **argv){
   
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t1 = ts.tv_nsec/1000+ts.tv_sec*1000000;
-            usleep(1000000 / 60 - (t1-t0));
+            usleep(max(0,1000000 / 60 - (t1-t0)));
         }
     }
 
