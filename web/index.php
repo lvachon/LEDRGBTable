@@ -107,7 +107,7 @@ if(isset($_GET['rand'])){
 							fclose($f);
 							imagepng($im,"../raws/png/{$bn}.png");
 						}
-						echo "<img onclick='playVid(\"{$bn}\");' class='vid' src='../raws/png/{$bn}.png' alt='{$bn}'/>";
+						echo "<img onclick='playVid(\"{$bn}\");' class='vid' src='rawpng/{$bn}.png' alt='{$bn}'/>";
 					}
 
 				?>
