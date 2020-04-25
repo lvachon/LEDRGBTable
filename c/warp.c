@@ -286,7 +286,7 @@ int main(int argc, char **argv){
     ws2811_fini(&ledstring);
 
     //printf ("\n");
-    //endwin();
+    endwin();
     return ret;
 }
 
