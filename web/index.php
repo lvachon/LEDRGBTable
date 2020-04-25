@@ -51,12 +51,14 @@ if(isset($_GET['rand'])){
 <html>
 	<head>
 		<style>
-			.vid {margin:0.1cm;border:solid 1px #888888;height:2.5cm;}
+			.vid {margin:0.1cm;border:solid 1px #888888;height:2.5cm;display:inline-flex;width:5cm;text-align:center;justify-content:center;align-items:center;}
 			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;font-size:1cm;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
 			.status {font-size:0.75cm;}
 			.oflow {width:100%;height:40%;overflow-y:auto;text-align:center;}
+			.progbox {height: 20%;}
 			button {background:#404040;color:#AAAAAA;width:5cm;height:2.5cm;font-size:1cm;margin-bottom:0.1cm;}
+			h2,h1 {margin:0.4cm;}
 		</style>
 		<script>
 			function playVid(vid){
@@ -81,7 +83,7 @@ if(isset($_GET['rand'])){
 		<div style='font-size:1cm;'>
 			<label>
 				Brightness:
-				<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.innerHTML=`%${Math.floor(this.value/2.5)}`;' style='width:60%'/>
+				<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.innerHTML=`${Math.floor(this.value/2.5)}%`;' style='width:60%'/>
 			</label>
 			<span id='btxt'>50%</span>
 		</div>
@@ -111,7 +113,7 @@ if(isset($_GET['rand'])){
 							fclose($f);
 							imagepng($im,"../raws/png/{$bn}.png");
 						}
-						echo "<img onclick='playVid(\"{$bn}\");' class='vid' src='rawpng/{$bn}.png' alt='{$bn}'/>";
+						echo "<div style='background:url(\"rawpng/{$bn}.png\") onclick='playVid(\"{$bn}\");' class='vid' >{$bn}</div>";
 					}
 
 				?>
