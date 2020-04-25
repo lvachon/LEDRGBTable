@@ -51,7 +51,7 @@ if(isset($_GET['rand'])){
 <html>
 	<head>
 		<style>
-			.vid {margin:0.1cm;border:solid 1px #888888;height:2.5cm;display:inline-flex;width:5cm;text-align:center;justify-content:center;align-items:center;}
+			.vid {margin:0.1cm;border:solid 1px #888888;height:2.5cm;display:inline-flex;width:5cm;text-align:center;justify-content:center;align-items:center;cursor:pointer;}
 			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;font-size:1cm;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
 			.status {font-size:0.75cm;}
@@ -113,7 +113,7 @@ if(isset($_GET['rand'])){
 							fclose($f);
 							imagepng($im,"../raws/png/{$bn}.png");
 						}
-						echo "<div style='background:url(\"rawpng/{$bn}.png\") onclick='playVid(\"{$bn}\");' class='vid' >{$bn}</div>";
+						echo "<div style='background:url(\"rawpng/{$bn}.png\")' onclick='playVid(\"{$bn}\");' class='vid' >{$bn}</div>";
 					}
 
 				?>
