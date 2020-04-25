@@ -77,14 +77,11 @@ if(isset($_GET['rand'])){
 	</head>
 	<body>
 		<h1>LEDRGBTable</h1>
-		<div class='status'>
-			Next command: <span id='nextcmd'><?php echo file_get_contents("webcmd");?></span><br/>
-			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
-		</div>
+		
 		<div style='font-size:1cm;'>
 			<label>
 				Brightness:
-				<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.value=`%${Math.floor(this.value/2.5)}`;'/>
+				<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.innerHTML=`%${Math.floor(this.value/2.5)}`;' style='width:60%'/>
 			</label>
 			<span id='btxt'>50%</span>
 		</div>
@@ -131,6 +128,10 @@ if(isset($_GET['rand'])){
 				<button onclick='runCmd("clock=1")'>Clock</button>
 				<button onclick='runCmd("black=1")'>Off</button>
 			</div>
+		</div>
+		<div class='status'>
+			Next command: <span id='nextcmd'><?php echo file_get_contents("webcmd");?></span><br/>
+			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
 		</div>
 	</body>
 	<script>
