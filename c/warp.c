@@ -119,29 +119,29 @@ void preview(){
         int x = i%WIDTH;
         int y = i/WIDTH;
         int color = nRED;
-        if(gridB[i]&0xFF>0x80){//Red
-            if(gridB[i]&0xFF00>0x8000){//Green
-                if(gridB[i]&0xFF0000>0x800000){//Blue
+        if((gridB[i]&0xFF)>0x80){//Red
+            if((gridB[i]&0xFF00)>0x8000){//Green
+                if((gridB[i]&0xFF0000)>0x800000){//Blue
                     color=nWHITE;
                 }else{//No blue
                     color=nYELLOW;
                 }
             }else{//No Green
-                if(gridB[i]&0xFF0000>0x800000){//Blue
+                if((gridB[i]&0xFF0000)>0x800000){//Blue
                     color=nPURPLE;
                 }else{//No blue
                     color=nRED;
                 }
             }
         }else{
-            if(gridB[i]&0xFF00>0x8000){//Green
-                if(gridB[i]&0xFF0000>0x800000){//Blue
+            if((gridB[i]&0xFF00)>0x8000){//Green
+                if((gridB[i]&0xFF0000)>0x800000){//Blue
                     color=nCYAN;
                 }else{//No blue
                     color=nGREEN;
                 }
             }else{//No Green
-                if(gridB[i]&0xFF0000>0x800000){//Blue
+                if((gridB[i]&0xFF0000)>0x800000){//Blue
                     color=nBLUE;
                 }else{//No blue
                     color=nBLACK;
