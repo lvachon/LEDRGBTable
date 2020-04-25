@@ -47,7 +47,7 @@
 #define LED_COUNT               (WIDTH * HEIGHT)
 
 #define SLOW                    256
-#define NUM_STARS               32
+#define NUM_STARS               128
 #define WARP_FACTOR             1.05
 #define MIN_RAD_SQUARED         16
 
