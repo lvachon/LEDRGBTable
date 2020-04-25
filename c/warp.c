@@ -281,8 +281,8 @@ int main(int argc, char **argv){
                     x=WIDTH/2;
                     y=HEIGHT/2;
                 }
+                int j=x+WIDTH*y;
                 if(stars[i].x*stars[i].x+stars[i].y*stars[i].y >= MIN_RAD){
-                    int j=x+WIDTH*y;
                     if((gridB[j]&0xFF) < (stars[i].c&0xFF)){
                         gridB[j]+=stars[i].c&0xFF;
                     }else{
