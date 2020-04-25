@@ -54,8 +54,9 @@ if(isset($_GET['rand'])){
 			.vid {margin:2px;border:solid 1px #888888;height:2.5cm;}
 			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
-			.status {font-size:1cm;}
-			.oflow {width:90%;height:40%;overflow-y:auto;}
+			.status {font-size:0.75cm;}
+			.oflow {width:95%;height:40%;overflow-y:auto;}
+			.progbox button {width:5cm;height:2.5cm;}
 		</style>
 		<script>
 			function playVid(vid){
@@ -80,7 +81,13 @@ if(isset($_GET['rand'])){
 			Next command: <span id='nextcmd'><?php echo file_get_contents("webcmd");?></span><br/>
 			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
 		</div>
-		<div><label>Brightness:<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.value=`%${Math.floor(this.value/2.5)}`;'/></label><span id='btxt'></span></div>
+		<div style='font-size:1cm;'>
+			<label>
+				Brightness:
+				<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.value=`%${Math.floor(this.value/2.5)}`;'/>
+			</label>
+			<span id='btxt'>50%</span>
+		</div>
 		<div>	
 			<h2>Vids</h2>
 			<div class='vidbox oflow'>
@@ -111,18 +118,18 @@ if(isset($_GET['rand'])){
 					}
 
 				?>
-				<button onclick='runCmd("rand=1");' style='width:5cm;height:2.5cm;' value='?'>
+				<button onclick='runCmd("rand=1");' style='width:5cm;height:2.5cm;'>?</button>
 			</div>
 		</div>
 		<div>
 			<h2>Progs</h2>
 			<div class='progbox oflow'>
-				<button onclick='runCmd("rps=1")' value='RPS'/>
-				<button onclick='runCmd("warp=1")' value='Warp'/>
-				<button onclick='runCmd("life=1")' value='Life'/>
-				<button onclick='runCmd("matrix=1")' value='Matrix'/>
-				<button onclick='runCmd("clock=1")' value='Clock'/>
-				<button onclick='runCmd("black=1")' value='Off'/>
+				<button onclick='runCmd("rps=1")'>RPS</button>
+				<button onclick='runCmd("warp=1")'>Warp</button>
+				<button onclick='runCmd("life=1")'>Life</button>
+				<button onclick='runCmd("matrix=1")'>Matrix</button>
+				<button onclick='runCmd("clock=1")'>Clock'</button>
+				<button onclick='runCmd("black=1")'>Off'</button>
 			</div>
 		</div>
 	</body>
