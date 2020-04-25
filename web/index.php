@@ -34,6 +34,11 @@ if(isset($_GET['life'])){
 	file_put_contents("webcmd",$cmd);
 	die();
 }
+if(isset($_GET['warp'])){
+	$cmd = "cd ../c/;./warp 1 {$brightness}";
+	file_put_contents("webcmd",$cmd);
+	die();
+}
 if(isset($_GET['rand'])){
 	$a = glob("../raws/*.raw");
 	$file = $a[rand(0,floor(count($a)-1))];
@@ -50,6 +55,7 @@ if(isset($_GET['rand'])){
 			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
 			.status {font-size:1cm;}
+			.oflow {width:90%;height:40%;overflow-y:auto;}
 		</style>
 		<script>
 			function playVid(vid){
@@ -74,46 +80,50 @@ if(isset($_GET['rand'])){
 			Next command: <span id='nextcmd'><?php echo file_get_contents("webcmd");?></span><br/>
 			Current command: <span id='curcmd'><?php echo file_get_contents('curcmd');?></span>
 		</div>
-		<div><label>Brightness:<input value='127' type='range' step='1' id='brightness' min='0' max='255'/></label></div>
+		<div><label>Brightness:<input value='127' type='range' step='1' id='brightness' min='0' max='255' width='80%' onchange='btxt.value=`%${Math.floor(this.value/2.5)}`;'/></label><span id='btxt'></span></div>
 		<div>	
 			<h2>Vids</h2>
-			<?php 
-				$a = glob("../raws/*.raw");
-				$im = imagecreatetruecolor(31,16);
-				foreach($a as $file){
-					$f = fopen($file,"rb");
-					$frames = filesize($file)/(31*16*3);
-					$offset = floor($frames/2)*(31*16*3)-31*3;
-					fseek($f,$offset);
-					for($i=0;$i<31*16;$i++){
-						$y=floor($i/31);
-						$x=$i%31;
-						if(($y%2)){$x=30-$x;}
-						$g = ord(fgetc($f));
-						$r = ord(fgetc($f));
-						$b = ord(fgetc($f));
-						$c = imagecolorallocate($im,$r,$g,$b);
-						imagesetpixel($im,$x,$y,$c);
+			<div class='vidbox oflow'>
+				<?php 
+					$a = glob("../raws/*.raw");
+					$im = imagecreatetruecolor(31,16);
+					foreach($a as $file){
+						$bn = basename($file,".raw");
+						if(!file_exists("../raws/png/{$bn}.png")){
+							$f = fopen($file,"rb");
+							$frames = filesize($file)/(31*16*3);
+							$offset = floor($frames/2)*(31*16*3)-31*3;
+							fseek($f,$offset);
+							for($i=0;$i<31*16;$i++){
+								$y=floor($i/31);
+								$x=$i%31;
+								if(($y%2)){$x=30-$x;}
+								$g = ord(fgetc($f));
+								$r = ord(fgetc($f));
+								$b = ord(fgetc($f));
+								$c = imagecolorallocate($im,$r,$g,$b);
+								imagesetpixel($im,$x,$y,$c);
+							}
+							fclose($f);
+							imagepng($im,"../raws/png/{$bn}.png");
+						}
+						echo "<img onclick='playVid(\"{$bn}\");' class='vid' src='../raws/png/{$bn}.png' alt='{$bn}'/>";
 					}
-					fclose($f);
-					ob_flush();
-					ob_start();
-					imagepng($im);
-					$img = ob_get_clean();
-					$bn = basename($file,".raw");
-					echo "<img onclick='playVid(\"{$bn}\");' class='vid' src='data:image/png;base64, ".base64_encode($img)."'/>";
-				}
 
-			?>
-			<a href='javascript:runCmd("rand=1");'>[ ? ]</a>
+				?>
+				<button onclick='runCmd("rand=1");' style='width:5cm;height:2.5cm;' value='?'>
+			</div>
 		</div>
 		<div>
 			<h2>Progs</h2>
-			<a href='javascript:runCmd("rps=1")'>RPS</a><br/>
-			<a href='javascript:runCmd("life=1")'>Life</a><br/>
-			<a href='javascript:runCmd("matrix=1")'>Matrix</a><br/>
-			<a href='javascript:runCmd("clock=1")'>Clock</a><br/>
-			<a href='javascript:runCmd("black=1")'>Off</a>
+			<div class='progbox oflow'>
+				<button onclick='runCmd("rps=1")' value='RPS'/>
+				<button onclick='runCmd("warp=1")' value='Warp'/>
+				<button onclick='runCmd("life=1")' value='Life'/>
+				<button onclick='runCmd("matrix=1")' value='Matrix'/>
+				<button onclick='runCmd("clock=1")' value='Clock'/>
+				<button onclick='runCmd("black=1")' value='Off'/>
+			</div>
 		</div>
 	</body>
 	<script>
