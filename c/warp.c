@@ -49,7 +49,7 @@
 #define SLOW                    256
 #define NUM_STARS               32
 #define WARP_FACTOR             1.05
-#define MIN_RAD
+#define MIN_RAD_SQUARED         16
 
 int width = WIDTH;
 int height = HEIGHT;
@@ -282,7 +282,7 @@ int main(int argc, char **argv){
                     y=HEIGHT/2;
                 }
                 int j=x+WIDTH*y;
-                if(stars[i].x*stars[i].x+stars[i].y*stars[i].y >= MIN_RAD){
+                if(stars[i].x * stars[i].x + stars[i].y * stars[i].y >= MIN_RAD_SQUARED){
                     if((gridB[j]&0xFF) < (stars[i].c&0xFF)){
                         gridB[j]+=stars[i].c&0xFF;
                     }else{
