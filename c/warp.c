@@ -47,8 +47,9 @@
 #define LED_COUNT               (WIDTH * HEIGHT)
 
 #define SLOW                    256
-#define NUM_STARS               16
-#define WARP_FACTOR             1.1
+#define NUM_STARS               32
+#define WARP_FACTOR             1.05
+#define MIN_RAD
 
 int width = WIDTH;
 int height = HEIGHT;
@@ -280,21 +281,23 @@ int main(int argc, char **argv){
                     x=WIDTH/2;
                     y=HEIGHT/2;
                 }
-                int j=x+WIDTH*y;
-                if((gridB[j]&0xFF) < (stars[i].c&0xFF)){
-                    gridB[j]+=stars[i].c&0xFF;
-                }else{
-                    gridB[j]|=0xFF;
-                }
-                if((gridB[j]&0xFF00) < (stars[i].c&0xFF00)){
-                    gridB[j]+=stars[i].c&0xFF00;
-                }else{
-                    gridB[j]|=0xFF00;
-                }
-                if((gridB[j]&0xFF0000) < (stars[i].c&0xFF0000)){
-                    gridB[j]+=stars[i].c&0xFF0000;
-                }else{
-                    gridB[j]|=0xFF0000;
+                if(stars[i].x*stars[i].x+stars[i].y*stars[i].y >= MIN_RAD){
+                    int j=x+WIDTH*y;
+                    if((gridB[j]&0xFF) < (stars[i].c&0xFF)){
+                        gridB[j]+=stars[i].c&0xFF;
+                    }else{
+                        gridB[j]|=0xFF;
+                    }
+                    if((gridB[j]&0xFF00) < (stars[i].c&0xFF00)){
+                        gridB[j]+=stars[i].c&0xFF00;
+                    }else{
+                        gridB[j]|=0xFF00;
+                    }
+                    if((gridB[j]&0xFF0000) < (stars[i].c&0xFF0000)){
+                        gridB[j]+=stars[i].c&0xFF0000;
+                    }else{
+                        gridB[j]|=0xFF0000;
+                    }
                 }
             }
 
@@ -303,7 +306,7 @@ int main(int argc, char **argv){
   
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t1 = ts.tv_nsec/1000+ts.tv_sec*1000000;
-            usleep(1000000 / 30 - (t1-t0));
+            usleep(1000000 / 60 - (t1-t0));
         }
     }
 
