@@ -52,11 +52,12 @@ if(isset($_GET['rand'])){
 	<head>
 		<style>
 			.vid {margin:2px;border:solid 1px #888888;height:2.5cm;}
-			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;}
+			body {background:#000000;color:#AAAAAA;font-weight:bold;font-family:sans-serif;font-size:1cm;}
 			a {color:#EEEEEE;font-weight:bold;font-size:2.5cm;}
 			.status {font-size:0.75cm;}
 			.oflow {width:95%;height:40%;overflow-y:auto;}
 			.progbox button {width:5cm;height:2.5cm;}
+			button {background:#404040;color:#AAAAAA;}
 		</style>
 		<script>
 			function playVid(vid){
@@ -118,7 +119,7 @@ if(isset($_GET['rand'])){
 					}
 
 				?>
-				<button onclick='runCmd("rand=1");' style='width:5cm;height:2.5cm;'>?</button>
+				<button onclick='runCmd("rand=1");' style='width:5cm;height:2.5cm;font-size:2cm;'>?</button>
 			</div>
 		</div>
 		<div>
