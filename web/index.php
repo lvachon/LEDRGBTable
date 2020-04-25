@@ -59,7 +59,7 @@ if(isset($_GET['rand'])){
 			.progbox {height: 20%;}
 			button {background:#404040;color:#AAAAAA;width:5cm;height:2.5cm;font-size:1cm;margin-bottom:0.1cm;}
 			h2,h1 {margin:0.4cm;}
-			.invert {color:#FFFFFF;mix-blend-mode:difference;}
+			.invert {color:#FFFFFF;mix-blend-mode:difference;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
 		</style>
 		<script>
 			function playVid(vid){
