@@ -214,8 +214,8 @@ ws2811_led_t hue2rgb(unsigned char hue){
 
 int main(int argc, char **argv){
     ws2811_return_t ret;
-    initscr();
-    start_color();
+    //initscr();
+    //start_color();
     init_pair(nRED,COLOR_RED,COLOR_BLACK);
     init_pair(nYELLOW,COLOR_YELLOW,COLOR_BLACK);
     init_pair(nGREEN,COLOR_GREEN,COLOR_BLACK);
@@ -247,7 +247,7 @@ int main(int argc, char **argv){
     while(running && (loops==-1 || loops>0)){
         if(loops>0){loops--;}
         
-        for(int frame=0;frame<900 && running;frame++){
+        for(int frame=0;frame<1800 && running;frame++){
 
             clock_gettime(CLOCK_REALTIME, &ts); 
             uint64_t t0 = ts.tv_nsec/1000+ts.tv_sec*1000000;
@@ -301,7 +301,7 @@ int main(int argc, char **argv){
                 }
             }
 
-            preview();
+            //preview();
             if(!render()){break;}
   
             clock_gettime(CLOCK_REALTIME, &ts); 
@@ -315,7 +315,7 @@ int main(int argc, char **argv){
     ws2811_fini(&ledstring);
 
     //printf ("\n");
-    endwin();
+    //endwin();
     return ret;
 }
 
