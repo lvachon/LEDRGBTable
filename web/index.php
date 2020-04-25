@@ -113,7 +113,7 @@ if(isset($_GET['rand'])){
 							fclose($f);
 							imagepng($im,"../raws/png/{$bn}.png");
 						}
-						echo "<div style='center / contain background:url(\"rawpng/{$bn}.png\")' onclick='playVid(\"{$bn}\");' class='vid' >".substr($bn,0,8)."</div>";
+						echo "<div style='background: center / contain no-repeat url(\"rawpng/{$bn}.png\")' onclick='playVid(\"{$bn}\");' class='vid' >".substr($bn,0,8)."</div>";
 					}
 
 				?>
