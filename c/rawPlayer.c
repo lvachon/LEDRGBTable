@@ -95,7 +95,7 @@ unsigned char* readFileBytes(const char *name)
     long len = ftell(fl);
     frames = len/(3*LED_COUNT);
     unsigned char *ret = malloc(len);  
-    fseek(fl, 3*WIDTH, SEEK_SET);  
+    fseek(fl, 0, SEEK_SET);  
     fread(ret, 1, len, fl);  
     fclose(fl);  
     return ret;  
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
     while((loops>0||loops==-1) && running){
     	for(int frame=0;frame<frames && running;frame++){
             for(int i=0;i<LED_COUNT && running;i++){
-	        	ledstring.channel[0].leds[i]=anim[3*(frame*LED_COUNT+i)+1]<<16|anim[3*(frame*LED_COUNT+i)+0]<<8|anim[3*(frame*LED_COUNT+i)+2];
+	        	ledstring.channel[0].leds[i]=anim[3*(frame*LED_COUNT+i)+1-WIDTH*3]<<16|anim[3*(frame*LED_COUNT+i)+0-WIDTH*3]<<8|anim[3*(frame*LED_COUNT+i)+2-WIDTH*3];
 	        }
 	        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
 	        {
