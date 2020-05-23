@@ -40,16 +40,13 @@ if(isset($_GET['warp'])){
 	die();
 }
 if(isset($_GET['img'])){
-	$url = escaleshellarg($_GET['img']);
+	$url = escapeshellarg($_GET['img']);
 	$cmd = "php img.php {$url} {$brightness}";
     file_put_contents("webcmd",$cmd);
 	die();
 }
 if(isset($_GET['rand'])){
 	$a = glob("../raws/*.raw");
-	$file = $a[rand(0,floor(count($a)-1))];
-	$secs = 0.03 * filesize($file)/(31*16*3);
-	$loops = max(1,floor(30/$secs));
 	$cmd = "rand {$brightness}";
 	file_put_contents("webcmd",$cmd);
 	die();
