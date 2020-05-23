@@ -10,7 +10,7 @@ $a = imagecreatefrompng("img.png");
 imagecopy($im,$a,0,0,0,0,31,16);
 imagecopy($im,$a,0,16,0,0,31,16);
 imagepng($im,"img2.png");
-exec("convert img2.png -compress none -set comment 'img.php4LEDRGBTable' img.ppm")
+exec("convert img2.png -compress none -set comment 'img.php4LEDRGBTable' img.ppm");
 exec("python3 ../vid_conv/ppm2bytes.py img.ppm img.raw");
 exec("../c/rawPlayer img.raw 1 {$brightness}");
 file_put_contents("webcmd","");
