@@ -8,7 +8,7 @@ exec("../c/rawPlayer processing.raw 1 {$brightness}");
 $im = imagecreatetruecolor(31,32);
 $a = imagecreatefrompng("img.png");
 imagecopy($im,$a,0,0,0,0,31,16);
-imagecopy($im,$a,0,16,0,0,31,16);
+imagecopy($im,$a,0,15,0,0,31,16);
 imagepng($im,"img2.png");
 exec("convert img2.png -compress none -set comment 'img.php4LEDRGBTable' img.ppm");
 exec("python3 ../vid_conv/ppm2bytes.py img.ppm img.raw");
