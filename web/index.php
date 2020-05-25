@@ -47,7 +47,7 @@ if(isset($_GET['img'])){
 }
 if(isset($_GET['msg'])){
 	$msg = escapeshellarg($_GET['msg']);
-	$cmd = "php img.php {$msg} {$brightness}";
+	$cmd = "php msg.php {$msg} {$brightness}";
     file_put_contents("webcmd",$cmd);
 	die();
 }
