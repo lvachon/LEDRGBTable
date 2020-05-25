@@ -49,4 +49,4 @@ exec("../c/rawPlayer processing.raw 1 {$brightness}");
 exec("convert msg.png -compress none -set comment 'msg.php4LEDRGBTable' msg.ppm");
 exec("python3 ../vid_conv/ppm2bytes.py msg.ppm msg.raw");
 exec("../c/rawPlayer msg.raw 1 {$brightness}");
-file_put_contents("webcmd","");
+
