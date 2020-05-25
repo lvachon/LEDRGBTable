@@ -41,7 +41,7 @@ imagefill($im,0,0,$black);
 for($i=0;$i<$frames;$i++){
 	$c = hue2rgb($im,$i%360);
 	$x=31-$i;
-	$y = 16/2 - $textheight/2 + 16*$i;
+	$y = 16/2 - $textheight/2 + 16*$i-1;
 	imagettftext($im,$size,0,$x,$y,$c,$font,$msg);
 }
 imagepng($im,"msg.png");
@@ -49,4 +49,4 @@ exec("../c/rawPlayer processing.raw 1 {$brightness}");
 exec("convert msg.png -compress none -set comment 'msg.php4LEDRGBTable' msg.ppm");
 exec("python3 ../vid_conv/ppm2bytes.py msg.ppm msg.raw");
 exec("../c/rawPlayer msg.raw 1 {$brightness}");
-
+file_put_contents("webcmd","../c/rawPlayer msg.raw 1 {$brightness}");
