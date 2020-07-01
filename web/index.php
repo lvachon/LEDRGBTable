@@ -45,6 +45,12 @@ if(isset($_GET['img'])){
     file_put_contents("webcmd",$cmd);
 	die();
 }
+if(isset($_GET['strip'])){
+	$url = escapeshellarg($_GET['strip']);
+	$cmd = "php strip.php {$url} {$brightness}";
+    file_put_contents("webcmd",$cmd);
+	die();
+}
 if(isset($_GET['msg'])){
 	$msg = escapeshellarg($_GET['msg']);
 	$cmd = "php msg.php {$msg} {$brightness}";
@@ -140,6 +146,7 @@ if(isset($_GET['rand'])){
 				<button onclick='runCmd("matrix=1")'>Matrix</button>
 				<button onclick='runCmd("clock=1")'>Clock</button>
 				<button onclick='runCmd("img=http://lucvachon.com/radar_service/still.php")'>Radar</button>
+				<button onclick='runCmd("strip=http://lucvachon.com/radar_service/loop.php")'>Radar Loop</button>
 				<button onclick='runCmd("img="+prompt("Image URL:"))'>Image</button>
 				<button onclick='runCmd("msg="+prompt("Message:"))'>Text</button>
 				<button onclick='runCmd("black=1")'>Off</button>
