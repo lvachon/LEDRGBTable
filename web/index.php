@@ -57,6 +57,11 @@ if(isset($_GET['msg'])){
     file_put_contents("webcmd",$cmd);
 	die();
 }
+if(isset($_GET['adsb'])){
+	$cmd = "cd ../py/; python3 adsb.py {$brightness}";
+    file_put_contents("webcmd",$cmd);
+	die();
+}
 if(isset($_GET['rand'])){
 	$a = glob("../raws/*.raw");
 	$cmd = "rand {$brightness}";
@@ -145,8 +150,8 @@ if(isset($_GET['rand'])){
 				<button onclick='runCmd("life=1")'>Life</button>
 				<button onclick='runCmd("matrix=1")'>Matrix</button>
 				<button onclick='runCmd("clock=1")'>Clock</button>
-				<button onclick='runCmd("img=http://lucvachon.com/radar_service/still.php")'>Radar</button>
-				<button onclick='runCmd("strip=http://lucvachon.com/radar_service/loop.php")'>Radar Loop</button>
+				<button onclick='runCmd("strip=http://lucvachon.com/radar_service/loop.php")'>Radar</button>
+				<button onclick='runCmd("adsb=1")'>Planes</button>
 				<button onclick='runCmd("img="+prompt("Image URL:"))'>Image</button>
 				<button onclick='runCmd("msg="+prompt("Message:"))'>Text</button>
 				<button onclick='runCmd("black=1")'>Off</button>
