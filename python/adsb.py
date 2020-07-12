@@ -45,6 +45,7 @@ def hue2rgb(pos):
 with open("neadsb.raw","rb") as file:
 	animation = bytearray(file.read())
 cleananim = bytearray(animation)
+offset = COLS*ROWS*3
 for frame in range(0,30):
 	animation[:]=cleananim
 	with urllib.request.urlopen('http://192.168.1.21:8080/data/aircraft.json') as response:
@@ -55,14 +56,14 @@ for frame in range(0,30):
 		try:
 			x = int(COLS*(float(plane["lon"])-WEST)/(EAST-WEST))
 			y = int(ROWS-ROWS*(float(plane["lat"])-SOUTH)/(NORTH-SOUTH))
-			if(y%2):
+			if((y%2)==1):
 				x=COLS-1-x
 			c = int(255*float(plane["alt_baro"])/45000)
 			h = hue2rgb(c)
-			animation[x+y*COLS]=h[0]
-			animation[x+y*COLS+1]=h[1]
-			animation[x+y*COLS+2]=h[2]
+			animation[offset+3*(x+y*COLS)]=h[0]
+			animation[offset+3*(x+y*COLS)+1]=h[1]
+			animation[offset+3*(x+y*COLS)+2]=h[2]
 		except:
 			continue
-	neopixel_write.neopixel_write(pin,animation)
+	neopixel_write.neopixel_write(pin,animation[offset:])
 	time.sleep(5)
