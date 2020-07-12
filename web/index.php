@@ -58,7 +58,7 @@ if(isset($_GET['msg'])){
 	die();
 }
 if(isset($_GET['adsb'])){
-	$cmd = "cd ../py/; python3 adsb.py {$brightness}";
+	$cmd = "cd ../python/; python3 adsb.py {$brightness}";
     file_put_contents("webcmd",$cmd);
 	die();
 }
